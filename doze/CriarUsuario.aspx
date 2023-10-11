@@ -7,7 +7,7 @@
 
     <div class="container" style="padding: 100px 0;">
 
-        <div class="card" style="padding:30px 100px;">
+        <div class="card" style="padding: 30px 100px;">
             <div class="card-body">
                 <form id="CriarUsuarioForm" runat="server">
 
@@ -35,7 +35,7 @@
                                 <asp:ListItem Selected="True" Value="Cliente"> Cliente </asp:ListItem>
                                 <asp:ListItem Value="Em Andamento"> ADM </asp:ListItem>
                             </asp:DropDownList>
-                            
+
                         </div>
                     </div>
                     <div class="mb-3 form-check">
@@ -55,6 +55,9 @@
                         </div>
                     </div>
                 </form>
+
+                <asp:GridView ID="gdvUsuarios" runat="server" CssClass="table table-hover" Visible="false"></asp:GridView>
+
             </div>
         </div>
 

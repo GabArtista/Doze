@@ -8,7 +8,7 @@ using System.Web;
 /// </summary>
 public class Usuario
 {
-
+    //Atributos:
     public int _usuID { set; get; }
     public string _usuNome { set; get; }
     public string _usuTelefone { set; get; }
@@ -17,6 +17,8 @@ public class Usuario
     public string _usuTipoUsuario { set; get; }
     public DateTime _usuDataCadastro { set; get; }
     public Boolean _usuStatusConexao { set; get; }
-    public string _usuStatusAtivacao { set; get; }
+    public Boolean _usuStatusAtivacao { set; get; }
+
+
 
 }

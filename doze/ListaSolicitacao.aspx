@@ -16,6 +16,22 @@
 
             <!-- Solicitação -->
 
+
+            <asp:GridView ID="gdvSolicitacoes" runat="server" AutoGenerateColumns="false" CssClass="table table-hover MyTable" Visible="false">
+                <columns>
+
+                    <asp:BoundField DataField="IDSLC" HeaderText="#" />
+                    <asp:BoundField DataField="NomeUsu" HeaderText="E-Mail" />
+                    <asp:BoundField DataField="DataSlc" HeaderText="Ativo" />
+                    <asp:BoundField DataField="DescricaoSlc" HeaderText="Ativo" />
+
+                </columns>
+
+
+            </asp:GridView>
+            <br />
+            <asp:Label ID="lblMsg" runat="server"></asp:Label>
+
             <div class="list-group">
 
                 <!-- Solicitação 1 -->

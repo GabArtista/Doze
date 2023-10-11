@@ -21,20 +21,30 @@ public partial class Login : System.Web.UI.Page
     {
         if (!String.IsNullOrEmpty(txtEmail.Text) && !String.IsNullOrEmpty(txtSenha.Text))
         {
+
             String email = txtEmail.Text;
-            String senha = txtSenha.Text;
-            Usuario u1 = new Usuario();
-            u1._usuEmail = txtEmail.Text;
-            u1._usuSenha = Funcoes.HashSHA512(txtSenha.Text);
+            String senha = Funcoes.HashSHA512(txtSenha.Text);
+            
+            if (UsuarioBD.AuthenticaUsuario(email, senha) != null)
+            {
+
+                Usuario u1 = new Usuario();
+                u1._usuEmail = txtEmail.Text;
+                u1._usuSenha = Funcoes.HashSHA512(txtSenha.Text);
 
 
-            //Sessão: Partição de memoria (cache ou Coockie) no servidor
-            Session["USUARIO"] = u1;
+                //Sessão: Partição de memoria (cache ou Coockie) no servidor
+                Session["USUARIO"] = u1;
 
-            Response.Redirect("ADM.aspx?emailsembase="+u1._usuEmail+ "&emailcombase="+ Funcoes.HashBase64(u1._usuEmail));
+                Response.Redirect("ADM.aspx?emailsembase=" + u1._usuEmail + "&emailcombase=" + Funcoes.HashBase64(u1._usuEmail));
+            }
+            else
+            {
+                Response.Redirect("Home.aspx");
+            }
         }
-        
-        
+
+
 
 
     }

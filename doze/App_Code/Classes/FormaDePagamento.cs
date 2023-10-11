@@ -12,5 +12,6 @@ public class FormaDePagamento
     public int _fopID { set; get; }
     public String _fopNome { set; get; }
     public String _fopObservacao { set; get; }
+    public Boolean _fopStatusAtivacao { set; get; } 
 
 }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.UI.WebControls;
 
 /// <summary>
 /// Descrição resumida de Funcoes
@@ -46,4 +48,59 @@ public static class Funcoes
         return resultado;
     }
 
+    public static int CountDataSet(DataSet ds)
+    {
+        int count = 0;
+        if(ds != null)
+        {
+            count = ds.Tables[0].Rows.Count;
+        }
+        return count;
+    }
+
+    public static void FillGrid(GridView gdv, DataSet ds, Label lbl)
+    {
+        if (ds != null)
+        {
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                gdv.DataSource = ds.Tables[0].DefaultView;
+                gdv.DataBind();
+                gdv.HeaderRow.TableSection = TableRowSection.TableHeader;
+                gdv.Visible = true;
+            }
+            else
+            {
+                lbl.Text = "Não há registros";
+            }
+        }
+        else
+        {
+            gdv.Visible = false;
+            lbl.Text = "Erro ao buscar registros";
+        }
+    }
+
+
+    public static void FillRtp(Repeater rpt, DataSet ds, Label lbl)
+    {
+        if (ds != null)
+        {
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                rpt.DataSource = ds.Tables[0].DefaultView;
+                rpt.DataBind();
+                rpt.Visible = true;
+            }
+            else
+            {
+                lbl.Text = "Não há registros";
+            }
+        }
+        else
+        {
+            rpt.Visible = false;
+            lbl.Text = "Erro ao buscar registros";
+        }
+    }
 }

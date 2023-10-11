@@ -6,6 +6,76 @@
     <div class="container">
 
         <form id="ListaUsuarioForm" runat="server">
+            <asp:GridView ID="gdvUsuarios" runat="server"  AutoGenerateColumns="false" CssClass="table table-hover MyTable" Visible="false" OnRowDataBound="gdvUsuarios_RowDataBound" OnRowCommand="gdvUsuarios_RowCommand">
+
+
+                <Columns>
+
+                    <asp:BoundField DataField="IDUSU" HeaderText="#" />
+                    <asp:BoundField DataField="NomeUsu" HeaderText="E-Mail" />
+                    <asp:BoundField DataField="EmailUsu" HeaderText="Ativo" />
+                    <asp:BoundField DataField="SenhaUsu" HeaderText="Ativo" />
+                    <asp:BoundField DataField="TipoUsu" HeaderText="Ativo" />
+                    <asp:BoundField DataField="StatusConexaoUsu" HeaderText="Ativo" />
+                    <asp:BoundField DataField="StatusAtivacaoUsu" HeaderText="Ativo" />
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <!-- Modificações css durante a empressão da tabela -->
+                            <asp:LinkButton CommandArgument='<%# Bind("IDUsu") %>' ID="lkb_ativar" CssClass="btn btn-default" runat="server"></asp:LinkButton>
+
+                            <asp:LinkButton CommandArgument='<%# Bind("IDUsu") %>' ID="lkb_editar" CommandName="Encaminhar" Text="<i class='fa fa-link text-danger'> </i>"  CssClass="btn btn-default" runat="server"></asp:LinkButton>
+
+
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+
+
+            </asp:GridView>
+            <br />
+            <asp:Label ID="lblMsg" runat="server"></asp:Label>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Cogido
+                        </th>
+
+                        <th>Email
+                        </th>
+
+                        <th>Telefone
+                        </th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    <asp:Literal ID="lblLinhas" runat="server"></asp:Literal>
+                </tbody>
+            </table>
+
+
+
+            <div class="row">
+                <asp:Repeater ID="rptUsuarios" runat="server">
+                    <ItemTemplate>
+                        <div class="col-xs-12 col-md-6 col-lg-3 col-6">
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3><%# Eval("NomeUsu") %></h3>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+
 
             <div class="row" style="text-align: center;">
 
@@ -97,6 +167,7 @@
                 </div>
             </div>
         </form>
+
 
     </div>
 
