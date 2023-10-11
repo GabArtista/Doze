@@ -5,7 +5,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
-
+   
     
     <div class="container text-center fundo">
 
@@ -226,6 +226,8 @@
 
 
                                 <asp:LinkButton ID="btnLead" Text="ENVIAR" runat="server" CssClass="btn btn-dark styleBotao" OnClick="btnLead_Click"></asp:LinkButton>
+
+                                
                             </form>
 
 
@@ -239,6 +241,8 @@
         </div>
     </div>
 
+    
+     
 
 </asp:Content>
 

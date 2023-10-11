@@ -13,6 +13,14 @@
             </div>
 
             <!-- Solicitação -->
+            <br />
+            <br />
+            <br />
+            <asp:GridView ID="gdvSolicitacao" runat="server" CssClass="table table-hover" Visible="false"></asp:GridView>
+            <br />
+            <br />
+            <br />
+            <asp:Label ID="lblMsg" runat="server"></asp:Label>
 
             <div class="list-group">
 

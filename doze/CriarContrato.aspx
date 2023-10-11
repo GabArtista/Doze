@@ -12,19 +12,19 @@
 
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Nome</label>
-                        <asp:TextBox ID="txtNomeCtr" runat="server" placeholder="Novo do Contrato" CssClass="form-control" ClientIDMode="Static" TextMode="SingleLine"></asp:TextBox>
+                        <asp:TextBox ID="txtNomeCnt" runat="server" placeholder="Novo do Contrato" CssClass="form-control" ClientIDMode="Static" TextMode="SingleLine"></asp:TextBox>
                         <div id="emailHelp" class="form-text">Coloque o novo nome da forma de pagamento.</div>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Observação</label>
-                        <asp:TextBox ID="txtObservacaoCrt" runat="server" placeholder="Nova Observação" CssClass="form-control" ClientIDMode="Static" TextMode="MultiLine"></asp:TextBox>
+                        <asp:TextBox ID="txtObservacaoCnt" runat="server" placeholder="Nova Observação" CssClass="form-control" ClientIDMode="Static" TextMode="MultiLine"></asp:TextBox>
                     </div>
                     <div class="mb-3 form-check">
                         <label class="form-check-label" for="exampleCheck1">Status de Atividade</label>
                     </div>
 
                     <div class="row">
-                        <asp:CheckBox ID="chbStatusAtivacaoCtr" AutoPostBack="true" OnCheckedChanged="chbStatusAtivacao_Click" runat="server" Text="Ativdo" />
+                        <asp:CheckBox ID="chbStatusAtivacaoCnt" AutoPostBack="true" OnCheckedChanged="chbStatusAtivacao_Click" runat="server" Text="Ativdo" />
                     </div>
 
 

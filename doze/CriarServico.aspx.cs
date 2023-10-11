@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 
 public partial class CriarServico : System.Web.UI.Page
 {
+    private int _statusAtivacao = 0;
+   
     protected void Page_Load(object sender, EventArgs e)
     {
         //lblUrl.Text = Request.QueryString["email"].ToString();
@@ -24,12 +26,34 @@ public partial class CriarServico : System.Web.UI.Page
     protected void chbStatusAtivacao_Click(object sender, EventArgs e)
     {
 
+        _statusAtivacao = chbStatusAtivacaoSvc.Checked ? 1 : 0;
     }
 
 
     protected void btnCriar_Click(object sender, EventArgs e)
     {
+        Servico svc = new Servico();
 
+        svc._svcNome = txtNomeSvc.Text;
+        svc._svcPreco = Convert.ToInt32(txtPrecoSlv.Text);
+        svc._svcObservacao = TxtObservacao.Text;
+
+        //Status adivação sempre sera True apartir da criação
+        svc._svcStatusAtivacao = true;
+        /* Desnecessario
+        if (_statusAtivacao == 1)
+        {
+            svc._svcStatusAtivacao = true;
+        }
+        */
+         
+
+
+
+
+        ServicoBD.Insert(svc);
+
+        //Se o cadastro for sussedido:
         Response.Redirect("ListarServico.aspx");
 
     }

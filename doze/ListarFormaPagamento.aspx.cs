@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 
 public partial class ListarFormaPagamento : System.Web.UI.Page
 {
@@ -14,10 +15,41 @@ public partial class ListarFormaPagamento : System.Web.UI.Page
         {
 
             Usuario usu = (Usuario)Session["USUARIO"];
+
+
+            if (usu != null)
+            {
+                if (!Page.IsPostBack)
+                {
+                    LoadGrid();
+                }
+            }
+            else
+            {
+                Response.Redirect("Default.aspx");
+            }
         }
         else
         {
             Response.Redirect("Login.aspx");
+        }
+
+    }
+
+    void LoadGrid()
+    {
+        DataSet ds = FormaDePagamentoBD.ListarFormasDePagamentos();
+        Funcoes.FillGrid(gdvFormasDePagamentos, ds, lblMsg);
+    }
+
+    protected void gdvFormaDePagamento_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int FopId = 0;
+        if (e.CommandName == "Atualizar")
+        {
+            FopId = Convert.ToInt32(e.CommandArgument);
+            Session["FOP"] = FopId;
+            Response.Redirect("/EditarFormaPagamento.aspx");
         }
     }
 

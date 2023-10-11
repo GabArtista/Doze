@@ -13,11 +13,17 @@
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Nome</label>
                         <asp:TextBox ID="txtNomeSvc" runat="server" placeholder="Novo Serviço" CssClass="form-control" ClientIDMode="Static" TextMode="SingleLine"></asp:TextBox>
-                        <div id="emailHelp" class="form-text">Coloque o nome do Serviço.</div>
+                        <div id="odsNome" class="form-text">Coloque o nome do Serviço.</div>
                     </div>
+
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Valor do Serviço</label>
                         <asp:TextBox ID="txtPrecoSlv" runat="server" placeholder="Preço" CssClass="form-control" ClientIDMode="Static" TextMode="Number"></asp:TextBox>
+                    </div>
+
+                     <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Valor do Serviço</label>
+                        <asp:TextBox ID="TxtObservacao" runat="server" placeholder="Observação" CssClass="form-control" ClientIDMode="Static" TextMode="MultiLine"></asp:TextBox>
                     </div>
                     <div class="mb-3 form-check">
                         <label class="form-check-label" for="exampleCheck1">Status de Atividade</label>

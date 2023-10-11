@@ -6,6 +6,65 @@
     <div class="container">
 
         <form id="ListaUsuarioForm" runat="server">
+            <asp:GridView ID="gdvUsuarios" AutoGenerateColumns="false" runat="server" CssClass="table table-hover MyTable" Visible="false">
+
+                
+                <Columns>
+                    <asp:BoundField DataField ="IDUsu" HeaderText="#" />
+                    <asp:BoundField DataField="NomeUsu" HeaderText="Nome" />
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <!-- Modificações css durante a empressão da tabela -->
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+
+
+            </asp:GridView> 
+            <br />
+            <asp:Label ID="lblMsg" runat="server"></asp:Label>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Cogido
+                        </th>
+
+                        <th>Email
+                        </th>
+
+                        <th>Telefone
+                        </th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    <asp:Literal ID="lblLinhas" runat="server"></asp:Literal>
+                </tbody>
+            </table>
+
+
+
+            <div class="row">
+                <asp:Repeater ID="rptUsuarios" runat="server">
+                    <ItemTemplate>
+                        <div class="col-xs-12 col-md-6 col-lg-3 col-6">
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3><%# Eval("NomeUsu") %></h3>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+
 
             <div class="row" style="text-align: center;">
 
@@ -97,6 +156,7 @@
                 </div>
             </div>
         </form>
+
 
     </div>
 

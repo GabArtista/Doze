@@ -16,6 +16,11 @@
 
             <!-- Solicitação -->
 
+
+            <asp:GridView ID="gdvSolicitacoes" runat="server" CssClass="table table-hover" Visible="false"></asp:GridView>
+            <br />
+            <asp:Label ID="lblMsg" runat="server"></asp:Label>
+
             <div class="list-group">
 
                 <!-- Solicitação 1 -->

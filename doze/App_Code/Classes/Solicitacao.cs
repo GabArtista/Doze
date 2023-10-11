@@ -25,16 +25,16 @@ public class Solicitacao
 
 
     //Relacao de classes Usuario: 
-    public List<Usuario> usu { set; get; }
+    public Usuario usu { set; get; }
 
     //Relacao de classes Tipo De Contrato: 
-    public List<TipoDeContrato> tdc { set; get; }
+    public TipoDeContrato tdc { set; get; }
 
     //Relacao de classes Forma De Pagamento: 
-    public List<FormaDePagamento> fop { set; get; }
+    public FormaDePagamento fop { set; get; }
 
     //Relacao de classes Servico: 
-    public List<Servico> svc { set; get; }
+    public Servico svc { set; get; }
 
 }
 

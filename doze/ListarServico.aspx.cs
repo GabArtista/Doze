@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,6 +15,11 @@ public partial class ListarServico : System.Web.UI.Page
         {
 
             Usuario usu = (Usuario)Session["USUARIO"];
+
+            if (!Page.IsPostBack)
+            {
+                LoadGrid();
+            }
         }
         else
         {
@@ -42,5 +48,13 @@ public partial class ListarServico : System.Web.UI.Page
 
         Response.Redirect("CriarServico.aspx");
 
+    }
+    /// <summary>
+    /// Metodo para solicitar a listagem de contratos para a classe de conexao com o banco de dados
+    /// </summary>
+    void LoadGrid()
+    {
+        DataSet ds = TipoDeContratoBD.ListarTiposDeContratos();
+        Funcoes.FillGrid(gdvSolicitacao, ds, lblMsg);
     }
 }

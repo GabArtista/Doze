@@ -8,7 +8,7 @@
 
 
     <!-- Conteudo -->
-    <div class="container" style="padding:100px 0;">
+    <div class="container" style="padding: 100px 0;">
         <form id="ADMForm" runat="server">
 
 
@@ -22,6 +22,10 @@
                 </div>
 
                 <!-- Botões -->
+
+
+
+
 
                 <!--Botão 1 -->
                 <div class="col">

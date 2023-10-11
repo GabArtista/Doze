@@ -14,6 +14,15 @@
                 <h3>Tipo de Contrato</h3>
             </div>
 
+            <br />
+            <br />
+            <br />
+            <asp:GridView ID="gdvContratos" runat="server" CssClass="table table-hover" Visible="false"></asp:GridView>
+            <br />
+            <br />
+            <br />
+            <asp:Label ID="lblMsg" runat="server"></asp:Label>
+
             <!-- Solicitação -->
 
             <div class="list-group">

@@ -16,6 +16,10 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
 
+    <!-- DataTables -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+
+
 
     <style>
         /*Nav*/
@@ -118,5 +122,13 @@
     <script src="ASSETS/plugins/jquery/jquery.min.js"></script>
     <!-- Theme style -->
     <link href="ASSETS/CSS/adminlte.min.css" rel="stylesheet" />
+
+   
+    
+    <!-- DataTables JS -->
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+     <script>
+         $(".MyTable").DataTable();
+     </script>
 </body>
 </html>

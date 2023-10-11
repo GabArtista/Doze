@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="row">
-                        <asp:CheckBox ID="chbStatusAtivacao" AutoPostBack="true" OnCheckedChanged="chbStatusAtivacao_Click" runat="server" Text="Ativdo" />
+                        <asp:CheckBox ID="chbStatusAtivacaoFop" AutoPostBack="true" OnCheckedChanged="chbStatusAtivacao_Click" runat="server" Text="Ativdo" />
                     </div>
 
 
