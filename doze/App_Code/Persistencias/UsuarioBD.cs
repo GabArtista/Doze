@@ -34,8 +34,8 @@ public class UsuarioBD
             cmd.Parameters.Add(ConexaoBD.Parametro("?statusAtivacao", usuario._usuStatusAtivacao));
             cmd.ExecuteNonQuery(); // Só par DML (Comandos SQL que não retornam valores como resposta)
             conn.Close();
-            conn.Dispose();
-            cmd.Dispose();
+            conn.Dispose(); //Limpar cach
+            cmd.Dispose(); //Limpar cach
         }
         catch (Exception ex)
         {

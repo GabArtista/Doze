@@ -16,9 +16,16 @@ public partial class Home : System.Web.UI.Page
         }
 
     }
-
+    /// <summary>
+    /// Botão que cria a primeira solicitação do cliente.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void btnLead_Click(object sender, EventArgs e)
     {
+
+        //Validar se o e-mail ja esta cadastrado
+        //Se sim, Perguntar se a conta pertence ao usuario (Como: Solicitando a senha) Jogar ele para a pagina dele. Notificar.
         Usuario usu = new Usuario();
         
         usu._usuNome = txtNome.Text;
