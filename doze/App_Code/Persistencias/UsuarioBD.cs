@@ -72,6 +72,35 @@ public class UsuarioBD
         }
 
     }
+    /// <summary>
+    /// Retorna a ID do ultimo usuario cadastrado 
+    /// </summary>
+    /// <returns></returns>
+    public static int puxarIDUsuarioCadastrado()
+    {
+        try
+        {
+
+            DataSet ds = new DataSet();
+            IDbConnection conn = ConexaoBD.Conexao(); ;
+            string sql = "SELECT MAX(IDUsu) AS IDUsu FROM usuario;";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            IDataAdapter adp = ConexaoBD.Adapter(cmd);
+            adp.Fill(ds);
+            int id = Convert.ToInt32(ds.Tables[0].Rows[0][0]); //Converte o retorno do banco em INT
+            cmd.Dispose(); //Limpar cach
+            conn.Close();
+            conn.Dispose(); //Limpar cach
+            return id;
+
+        }
+        catch (Exception ex)
+        {
+            return 0;
+        }
+
+    }
+
 
     /// <summary>
     /// Metodo responsavel por atualizar os registros de usuario do banco de dados

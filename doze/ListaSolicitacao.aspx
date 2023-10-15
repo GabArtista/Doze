@@ -19,9 +19,8 @@
 
             <asp:GridView ID="gdvSolicitacoes" AutoGenerateColumns="false" runat="server" CssClass="table table-hover MyTable" Visible="false">
                 <Columns>
-                    <!-- Sempre que quiser definir quantas colunas tera a tabela, adcione:  AutoGenerateColumns="false" -->
                     <asp:BoundField DataField ="IDSlc" HeaderText="#" />
-                    <asp:BoundField DataField="DataSlc" HeaderText="Nome" />
+                    <asp:BoundField DataField="DataSlc" HeaderText="Data" />
                     <asp:BoundField DataField="DescricaoSlc" HeaderText="Descrição" />
                     <asp:BoundField DataField="ObservacaoSlc" HeaderText="Observação" />
                     <asp:BoundField DataField="StatusSlc" HeaderText="Status" />

@@ -57,7 +57,9 @@ public partial class Home : System.Web.UI.Page
         
 
         UsuarioBD.Insert(usu);
-        SolicitacaoBD.Insert(slc);
+        int idUsu;
+        idUsu = UsuarioBD.puxarIDUsuarioCadastrado();//Puchando o ID do Ultimo Usuario Cadastrado
+        SolicitacaoBD.Insert(slc, idUsu);
 
     }
 

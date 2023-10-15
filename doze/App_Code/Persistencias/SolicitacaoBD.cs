@@ -15,15 +15,16 @@ public class SolicitacaoBD
     /// Metodo responsavel por cadastrar uma nova Solicitação no BD MYSQL
     /// </summary>
     /// <param name="Solicitacao">Instancia de objeto Solicitação Preenchido (NEW) </param>
+    /// <param name="idUsu">Valor do id do usuario que fez a solicitação </param>
     /// <returns> If retorno = 0 then Sucesso else ERRO (-1) </returns>
-    public static int Insert(Solicitacao solicitacao)
+    public static int Insert(Solicitacao solicitacao, int idUsu)
     {
         int retorno = 0;
         try
         {
             IDbConnection conn = ConexaoBD.Conexao();
             IDbCommand cmd;
-            string sql = "INSERT INTO solicitacao (IDUsu, IDCnt, IDFop, DataSlc, DescricaoSlc, ObservacaoSlc, DataFechamentoSlc, LinkTrelloSlc, StatusSlc, GMailSlc, GSenha, ValorAcordado, Estrategiacobranca, IDadm) VALUES (1,1,1, ?data, ?descricao, 'Aguardando..', '2023-07-20','Aguardando..', 'Aguardando..', 'Aguardando..', 'Aguardando..', 0, 'Aguardando..', 0);";
+            string sql = "INSERT INTO solicitacao (IDUsu, IDCnt, IDFop, DataSlc, DescricaoSlc, ObservacaoSlc, DataFechamentoSlc, LinkTrelloSlc, StatusSlc, GMailSlc, GSenha, ValorAcordado, Estrategiacobranca, IDadm) VALUES (" + idUsu + ",1,1, ?data, ?descricao, 'Aguardando..', '2023-07-20','Aguardando..', 'Aguardando..', 'Aguardando..', 'Aguardando..', 0, 'Aguardando..', 0);";
             
             
             conn = ConexaoBD.Conexao();
