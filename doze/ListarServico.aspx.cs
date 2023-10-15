@@ -16,17 +16,39 @@ public partial class ListarServico : System.Web.UI.Page
 
             Usuario usu = (Usuario)Session["USUARIO"];
 
-            if (!Page.IsPostBack)
-            {
-                LoadGrid();
-            }
+            
         }
         else
         {
             Response.Redirect("Login.aspx");
         }
+
+        if (!Page.IsPostBack)
+        {
+            LoadGrid();
+        }
+
     }
 
+
+    /// <summary>
+    /// Carrega o grid para a função que monta os atributos da classe na tabela 
+    /// </summary>
+    void LoadGrid()
+    {
+        DataSet ds = ServicoBD.ListarServicos();
+        Funcoes.FillGrid(gdvServicos, ds, lblMsg);
+        LoadManualGrid(ds);
+    }
+    /// <summary>
+    /// Carrega o grid para a função que conta a quantidade de linhas que a tabela vai ter 
+    /// </summary>
+    /// <param name="ds"></param>
+    void LoadManualGrid(DataSet ds)
+    {
+        int qtd = Funcoes.CountDataSet(ds);
+
+    }
     protected void btnEditar_Click(object sender, EventArgs e)
     {
 
@@ -49,12 +71,5 @@ public partial class ListarServico : System.Web.UI.Page
         Response.Redirect("CriarServico.aspx");
 
     }
-    /// <summary>
-    /// Metodo para solicitar a listagem de contratos para a classe de conexao com o banco de dados
-    /// </summary>
-    void LoadGrid()
-    {
-        DataSet ds = TipoDeContratoBD.ListarTiposDeContratos();
-        Funcoes.FillGrid(gdvSolicitacao, ds, lblMsg);
-    }
+    
 }

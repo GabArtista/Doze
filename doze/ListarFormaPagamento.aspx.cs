@@ -36,22 +36,25 @@ public partial class ListarFormaPagamento : System.Web.UI.Page
 
     }
 
+    /// <summary>
+    /// Carrega o grid para a função que monta os atributos da classe na tabela 
+    /// </summary>
     void LoadGrid()
     {
         DataSet ds = FormaDePagamentoBD.ListarFormasDePagamentos();
         Funcoes.FillGrid(gdvFormasDePagamentos, ds, lblMsg);
+        LoadManualGrid(ds);
+    }
+    /// <summary>
+    /// Carrega o grid para a função que conta a quantidade de linhas que a tabela vai ter 
+    /// </summary>
+    /// <param name="ds"></param>
+    void LoadManualGrid(DataSet ds)
+    {
+        int qtd = Funcoes.CountDataSet(ds);
+
     }
 
-    protected void gdvFormaDePagamento_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
-        int FopId = 0;
-        if (e.CommandName == "Atualizar")
-        {
-            FopId = Convert.ToInt32(e.CommandArgument);
-            Session["FOP"] = FopId;
-            Response.Redirect("/EditarFormaPagamento.aspx");
-        }
-    }
 
     protected void btnEditar_Click(object sender, EventArgs e)
     {

@@ -36,8 +36,8 @@ public class FormaDePagamentoBD
 
             cmd.ExecuteNonQuery(); // Só par DML (Comandos SQL que não retornam valores como resposta)
             conn.Close();
-            conn.Dispose();
-            cmd.Dispose();
+            conn.Dispose(); //Limpar cach
+            cmd.Dispose(); //Limpar cach
         }
         catch (Exception ex)
         {
@@ -66,8 +66,8 @@ public class FormaDePagamentoBD
 
             cmd.ExecuteNonQuery();
             conn.Close();
-            cmd.Dispose();
-            conn.Dispose();
+            cmd.Dispose(); //Limpar cach
+            conn.Dispose(); //Limpar cach
 
             return 1;
         }
@@ -89,9 +89,9 @@ public class FormaDePagamentoBD
             IDbCommand cmd = ConexaoBD.Comando(sql, conn);
             IDataAdapter adp = ConexaoBD.Adapter(cmd);
             adp.Fill(ds);
-            cmd.Dispose();
+            cmd.Dispose(); //Limpar cach
             conn.Close();
-            conn.Dispose();
+            conn.Dispose(); //Limpar cach
             return ds;
 
         }

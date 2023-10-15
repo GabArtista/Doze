@@ -11,6 +11,7 @@ using System.Configuration;
 /// </summary>
 public class ServicoBD
 {
+
     /// <summary>
     /// Metodo responsavel por cadastrar um novo Serviço no BD MYSQL
     /// </summary>
@@ -35,14 +36,42 @@ public class ServicoBD
            
             cmd.ExecuteNonQuery(); // Só par DML (Comandos SQL que não retornam valores como resposta)
             conn.Close();
-            conn.Dispose();
-            cmd.Dispose();
+            conn.Dispose(); //Limpar cach
+            cmd.Dispose(); //Limpar cach
         }
         catch (Exception ex)
         {
             retorno = -2;
         }
         return retorno;
+    }
+
+    /// <summary>
+    /// Lista todos os Servicos e todas as informaçoes
+    /// </summary>
+    /// <returns></returns>
+    public static DataSet ListarServicos()
+    {
+        try
+        {
+
+            DataSet ds = new DataSet();
+            IDbConnection conn = ConexaoBD.Conexao(); ;
+            string sql = "SELECT * FROM servico";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            IDataAdapter adp = ConexaoBD.Adapter(cmd);
+            adp.Fill(ds);
+            cmd.Dispose(); //Limpar cach
+            conn.Close();
+            conn.Dispose(); //Limpar cach
+            return ds;
+
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+
     }
 
     /// <summary>
@@ -65,8 +94,8 @@ public class ServicoBD
             cmd.Parameters.Add(ConexaoBD.Parametro("?statusAtivacao", servico._svcStatusAtivacao));
             cmd.ExecuteNonQuery();
             conn.Close();
-            conn.Dispose();
-            cmd.Dispose();
+            conn.Dispose(); //Limpar cach
+            cmd.Dispose(); //Limpar cach
         }
         catch (Exception ex)
         {

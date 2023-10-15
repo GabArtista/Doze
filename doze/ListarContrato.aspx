@@ -14,119 +14,15 @@
                 <h3>Tipo de Contrato</h3>
             </div>
 
-            <br />
-            <br />
-            <br />
-            <asp:GridView ID="gdvContratos" runat="server" CssClass="table table-hover" Visible="false"></asp:GridView>
-            <br />
-            <br />
+            <!-- Solicitação -->
+
+            <asp:GridView ID="gdvContrato" runat="server" CssClass="table table-hover MyTable" Visible="false"></asp:GridView>
             <br />
             <asp:Label ID="lblMsg" runat="server"></asp:Label>
 
-            <!-- Solicitação -->
+            
 
-            <div class="list-group">
-
-                <!-- Solicitação 1 -->
-
-                <div type="button" class="list-group-item list-group-item-action" style="padding: 30px;">
-
-                    <div class="col">
-                        <div class="card-body">
-                            <h5 class="card-title">01</h5>
-                            <h6>Bimestral</h6>
-
-                        </div>
-                        <div class="spinner-grow text-success" role="status">
-                        </div>
-
-                    </div>
-
-                    <div class="col">
-                        <div class="card" style="width: auto;">
-                            <div class="card-body">
-
-                                <h6>O investimento e aplicado a cada Bimestre</h6>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row col-6">
-                        <asp:LinkButton ID="btnEditar" type="button" CssClass="btn btn-light  " OnClick="btnEditar_Click" runat="server">
-                                    <i class="fas fa-file"></i> Editar
-                        </asp:LinkButton>
-                    </div>
-
-                </div>
-
-                <!-- Solicitação 2 -->
-
-                <div type="button" class="list-group-item list-group-item-action" style="padding: 30px;">
-
-                    <div class="col">
-                        <div class="card-body">
-                            <h5 class="card-title">03</h5>
-                            <h6>Trimestral</h6>
-
-                        </div>
-                        <div class="spinner-grow text-success" role="status">
-                        </div>
-
-                    </div>
-
-                    <div class="col">
-                        <div class="card" style="width: auto;">
-                            <div class="card-body">
-
-                                <h6>O investimento e aplicado a cada Trimestre</h6>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row col-6">
-                        <asp:LinkButton ID="btnEditar2" type="button" CssClass="btn btn-light  " OnClick="btnEditar_Click" runat="server">
-                                    <i class="fas fa-file"></i> Editar
-                        </asp:LinkButton>
-                    </div>
-
-                </div>
-
-                <!-- Solicitação 3 -->
-
-                <div type="button" class="list-group-item list-group-item-action" style="padding: 30px;">
-
-                    <div class="col">
-                        <div class="card-body">
-                            <h5 class="card-title">03</h5>
-                            <h6>Mensal</h6>
-
-                        </div>
-                        <div class="spinner-grow text-success" role="status">
-                        </div>
-
-                    </div>
-
-                    <div class="col">
-                        <div class="card" style="width: auto;">
-                            <div class="card-body">
-
-                                <h6>O investimento e aplicado a cada Mes</h6>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row col-6">
-                        <asp:LinkButton ID="btnEditar3" type="button" CssClass="btn btn-light  " OnClick="btnEditar_Click" runat="server">
-                                    <i class="fas fa-file"></i> Editar
-                        </asp:LinkButton>
-                    </div>
-
-                </div>
-
-            </div>
+          
 
             <!-- Botão -->
             <div class="row">

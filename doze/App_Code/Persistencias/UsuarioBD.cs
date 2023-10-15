@@ -60,9 +60,9 @@ public class UsuarioBD
             IDbCommand cmd = ConexaoBD.Comando(sql, conn);
             IDataAdapter adp = ConexaoBD.Adapter(cmd);
             adp.Fill(ds);
-            cmd.Dispose();
+            cmd.Dispose(); //Limpar cach
             conn.Close();
-            conn.Dispose();
+            conn.Dispose(); //Limpar cach
             return ds;
 
         }
@@ -96,8 +96,8 @@ public class UsuarioBD
             cmd.Parameters.Add(ConexaoBD.Parametro("?statusAtivacao", usuario._usuStatusAtivacao));
             cmd.ExecuteNonQuery();
             conn.Close();
-            conn.Dispose();
-            cmd.Dispose();
+            conn.Dispose(); //Limpar cach
+            cmd.Dispose(); //Limpar cach
         }
         catch (Exception ex)
         {

@@ -27,6 +27,24 @@ public partial class ListarContrato : System.Web.UI.Page
         }
     }
 
+    /// <summary>
+    /// Carrega o grid para a função que monta os atributos da classe na tabela 
+    /// </summary>
+    void LoadGrid()
+    {
+        DataSet ds = FormaDePagamentoBD.ListarFormasDePagamentos();
+        Funcoes.FillGrid(gdvContrato, ds, lblMsg);
+        LoadManualGrid(ds);
+    }
+    /// <summary>
+    /// Carrega o grid para a função que conta a quantidade de linhas que a tabela vai ter 
+    /// </summary>
+    /// <param name="ds"></param>
+    void LoadManualGrid(DataSet ds)
+    {
+        int qtd = Funcoes.CountDataSet(ds);
+
+    }
     protected void btnEditar_Click(object sender, EventArgs e)
     {
 
@@ -50,12 +68,5 @@ public partial class ListarContrato : System.Web.UI.Page
 
     }
     
-    /// <summary>
-    /// Solicitar carregamento de lista de Contratos para a classe de conexão com o banco de dados
-    /// </summary>
-    void LoadGrid()
-    {
-        DataSet ds = TipoDeContratoBD.ListarTiposDeContratos();
-        Funcoes.FillGrid(gdvContratos, ds, lblMsg);
-    }
+    
 }

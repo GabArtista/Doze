@@ -25,7 +25,24 @@ public partial class ListaSolicitacao : System.Web.UI.Page
         }
         
     }
+    /// <summary>
+    /// Carrega o grid para a função que monta os atributos da classe na tabela 
+    /// </summary>
+    void LoadGrid()
+    {
+        DataSet ds = SolicitacaoBD.ListarSolicitacoes();
+        Funcoes.FillGrid(gdvSolicitacoes, ds, lblMsg);
+        LoadManualGrid(ds);
+    }
+    /// <summary>
+    /// Carrega o grid para a função que conta a quantidade de linhas que a tabela vai ter 
+    /// </summary>
+    /// <param name="ds"></param>
+    void LoadManualGrid(DataSet ds)
+    {
+        int qtd = Funcoes.CountDataSet(ds);
 
+    }
     protected void btnEditar_Click(object sender, EventArgs e)
     {
 
@@ -40,12 +57,5 @@ public partial class ListaSolicitacao : System.Web.UI.Page
         
     }
 
-    /// <summary>
-    /// Metodo para Solicitar o Carregamento da Lista de Solicitações a classe de banco de dados
-    /// </summary>
-    void LoadGrid()
-    {
-        DataSet ds = SolicitacaoBD.ListarSolicitacoes();
-        Funcoes.FillGrid(gdvSolicitacoes, ds, lblMsg);
-    }
+    
 }

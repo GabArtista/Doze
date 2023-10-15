@@ -15,7 +15,7 @@
 
                 <h3>Formas de Pagamento</h3>
             </div>
-            <asp:GridView ID="gdvFormasDePagamentos" runat="server" CssClass="table table-hover" Visible="false"></asp:GridView>
+            <asp:GridView ID="gdvFormasDePagamentos" runat="server" CssClass="table table-hover MyTable" Visible="false"></asp:GridView>
             <br />
             <asp:Label ID="lblMsg" runat="server"></asp:Label>
             

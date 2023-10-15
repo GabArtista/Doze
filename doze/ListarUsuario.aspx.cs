@@ -28,35 +28,36 @@ public partial class ListarUsuario : System.Web.UI.Page
         }
     }
 
-
+    /// <summary>
+    /// Carrega o grid para a função que monta os atributos da classe na tabela 
+    /// </summary>
     void LoadGrid()
     {
         DataSet ds = UsuarioBD.ListarUsuarios();
         Funcoes.FillGrid(gdvUsuarios, ds, lblMsg);
-        LoadRepeat(ds);
+        LoadManualGrid(ds);
     }
 
+    /// <summary>
+    /// Carrega o grid para a função que conta a quantidade de linhas que a tabela vai ter 
+    /// </summary>
+    /// <param name="ds"></param>
+    void LoadManualGrid(DataSet ds)
+    {
+        int qtd = Funcoes.CountDataSet(ds);
+
+    }
     void LoadRepeat(DataSet ds)
     {
         int qtd = Funcoes.CountDataSet(ds);
         if(qtd > 0)
         {
-            rptUsuarios.DataSource = ds.Tables[0].DefaultView;
-            rptUsuarios.DataBind();
+            gdvUsuarios.DataSource = ds.Tables[0].DefaultView;
+            gdvUsuarios.DataBind();
         }
     }
 
-    void LoadManualGrid(DataSet ds)
-    {
-        int qtd = Funcoes.CountDataSet(ds);
-        if (qtd > 0)
-        {
-            foreach(DataRow dr in ds.Tables[0].Rows)
-            {
-                lblLinhas.Text += "<tr><tb>" + dr["IDUsu"].ToString() + "<tr/><tr/>" + "<tr><tb>" + dr["EmailUsu"].ToString() + "<tr/><tr/>" + "<tr><tb>" + dr["_usuEmail"].ToString() + "<tr/><tr/>" + "<tr><tb>" + dr["_usuTelefone"].ToString() + "<tr/><tr/>";
-            }
-        }
-    }
+    
 
     protected void btnEditar_Click(object sender, EventArgs e)
     {

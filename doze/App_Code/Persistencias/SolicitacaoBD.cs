@@ -41,8 +41,8 @@ public class SolicitacaoBD
             cmd.Parameters.Add(ConexaoBD.Parametro("?idAdm", solicitacao._slcIDAdm));
             cmd.ExecuteNonQuery(); // Só par DML (Comandos SQL que não retornam valores como resposta)
             conn.Close();
-            conn.Dispose();
-            cmd.Dispose();
+            conn.Dispose(); //Limpar cach
+            cmd.Dispose(); //Limpar cach
         }
         catch (Exception ex)
         {
@@ -66,9 +66,9 @@ public class SolicitacaoBD
             IDbCommand cmd = ConexaoBD.Comando(sql, conn);
             IDataAdapter adp = ConexaoBD.Adapter(cmd);
             adp.Fill(ds);
-            cmd.Dispose();
+            cmd.Dispose(); //Limpar cach
             conn.Close();
-            conn.Dispose();
+            conn.Dispose(); //Limpar cach
             return ds;
 
         }
@@ -106,8 +106,8 @@ public class SolicitacaoBD
             cmd.Parameters.Add(ConexaoBD.Parametro("?idAdm", solicitacao._slcIDAdm));
             cmd.ExecuteNonQuery();
             conn.Close();
-            conn.Dispose();
-            cmd.Dispose();
+            conn.Dispose(); //Limpar cach
+            cmd.Dispose(); //Limpar cach
         }
         catch (Exception ex)
         {
