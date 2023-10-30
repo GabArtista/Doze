@@ -144,4 +144,31 @@ public class SolicitacaoBD
         return error;
 
     }
+    /// <summary>
+    /// Metodo responsavel por Cadastrar o id do ADM que abriu a Solcitação na colina IDADM
+    /// </summary>
+    /// <param name="Solicitacao"></param>
+    /// <returns></returns>
+    public static int admResponsavel(int idAdm, int idSlc)
+    {
+        int error = 0;
+        try
+        {
+            IDbConnection conn = ConexaoBD.Conexao();
+            string sql = "UPDATE solicitacao SET IDAdm = ?idAdm  WHERE IDSlc = ?id";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            cmd.Parameters.Add(ConexaoBD.Parametro("?idAdm", idAdm));
+            cmd.Parameters.Add(ConexaoBD.Parametro("?id", idSlc));
+
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            conn.Dispose();
+            cmd.Dispose();
+        }
+        catch (Exception ex)
+        {
+            error = -2;
+        }
+        return error;
+    } 
 }

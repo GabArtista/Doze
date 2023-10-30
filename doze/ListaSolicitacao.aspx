@@ -20,7 +20,7 @@
                 -->
             
 
-            <asp:GridView ID="gdvSolicitacoes" runat="server" AutoGenerateColumns="false" CssClass="table table-hover MyTable" Visible="false" OnRowCommand="gdvUsuarios_RowCommand">
+            <asp:GridView ID="gdvSolicitacoes" runat="server" AutoGenerateColumns="false" CssClass="table table-hover MyTable" Visible="false" OnRowCommand="gdvSolicitacao_RowCommand">
                 
                
                 <Columns>

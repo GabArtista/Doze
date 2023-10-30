@@ -61,15 +61,17 @@ public partial class ListaSolicitacao : System.Web.UI.Page
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected void gdvUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
+    protected void gdvSolicitacao_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         int codigo = Convert.ToInt32(e.CommandArgument.ToString());
 
         //Se o comando Encaminhar for precionado 
         if (e.CommandName == "Encaminhar")
         {
+            
+            Usuario usu = (Usuario)Session["USUARIO"];
+            SolicitacaoBD.admResponsavel(Convert.ToInt32(Session["USUARIOID"]), codigo);
             Response.Redirect("http://localhost:49677/NegociacaoAdm.aspx?usu=" + codigo);
-
         }
 
     }

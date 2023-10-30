@@ -36,7 +36,7 @@ public partial class Home : System.Web.UI.Page
         
         usu._usuNome = txtNome.Text;
         usu._usuEmail = txtEmail.Text;
-        usu._usuSenha = txtSenha.Text;
+        usu._usuSenha = Funcoes.HashSHA512(txtSenha.Text);
         usu._usuTelefone = txtTelefone.Text;
         usu._usuTipoUsuario = "Cliente";
         usu._usuStatusConexao = false;

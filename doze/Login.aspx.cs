@@ -32,13 +32,16 @@ public partial class Login : System.Web.UI.Page
                 u1._usuEmail = txtEmail.Text;
                 u1._usuSenha = Funcoes.HashSHA512(txtSenha.Text);
 
-
+                //Pegar ID do Usuario que fez Login
+                int id = UsuarioBD.puxarIDUsuarioConectado(email, senha);
                 //Sessão: Partição de memoria (cache ou Coockie) no servidor
+                //Colocando ID do Usuario Logado em Sessao
+                Session["USUARIOID"] = id;
                 Session["USUARIO"] = u1;
 
                 Response.Redirect("ADM.aspx?emailsembase=" + u1._usuEmail + "&emailcombase=" + Funcoes.HashBase64(u1._usuEmail));
             }
-            else
+            else if(UsuarioBD.AuthenticaUsuario(email, senha) == null)
             {
                 Response.Redirect("Home.aspx");
             }

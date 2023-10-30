@@ -117,16 +117,60 @@ public class UsuarioBD
             IDbCommand cmd = ConexaoBD.Comando(sql, conn);
             IDataAdapter adp = ConexaoBD.Adapter(cmd);
             adp.Fill(ds);
+            int totalRegistros = ds.Tables[0].Rows.Count;
             cmd.Dispose();
             conn.Close();
             conn.Dispose();
-            return ds;
-            //Se a retorno da busca for igual a 0: Não permitir acesso
+
+            // Verifica se existe algum registro
+            if (totalRegistros == 0)
+            {
+                // Não existe nenhum registro com o email e a senha informados
+                // ...
+                return null;
+            }
+            else
+            {
+                // Existe pelo menos um registro com o email e a senha informados
+                // ...
+                
+                return ds;
+            }
+            
+            
 
         }
         catch (Exception ex)
         {
             return null;
+        }
+
+    }
+    /// <summary>
+    /// Retorna a ID do usuario que esta fazendo login 
+    /// </summary>
+    /// <returns></returns>
+    public static int puxarIDUsuarioConectado(String email, String senha)
+    {
+        try
+        {
+
+            DataSet ds = new DataSet();
+            IDbConnection conn = ConexaoBD.Conexao(); ;
+            string sql = "SELECT IDUsu FROM usuario WHERE EmailUsu = '" + email + "' AND SenhaUsu = '" + senha + "';";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            IDataAdapter adp = ConexaoBD.Adapter(cmd);
+            adp.Fill(ds);
+            int id = Convert.ToInt32(ds.Tables[0].Rows[0][0]); //Converte o retorno do banco em INT
+            cmd.Dispose(); //Limpar cach
+            conn.Close();
+            conn.Dispose(); //Limpar cach
+            return id;
+
+        }
+        catch (Exception ex)
+        {
+            return 0;
         }
 
     }
