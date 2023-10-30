@@ -39,7 +39,7 @@ public partial class ListarUsuario : System.Web.UI.Page
     void LoadRepeat(DataSet ds)
     {
         int qtd = Funcoes.CountDataSet(ds);
-        if (qtd > 0)
+        if(qtd > 0)
         {
             rptUsuarios.DataSource = ds.Tables[0].DefaultView;
             rptUsuarios.DataBind();
@@ -51,13 +51,24 @@ public partial class ListarUsuario : System.Web.UI.Page
         int qtd = Funcoes.CountDataSet(ds);
         if (qtd > 0)
         {
-            foreach (DataRow dr in ds.Tables[0].Rows)
+            foreach(DataRow dr in ds.Tables[0].Rows)
             {
                 lblLinhas.Text += "<tr><tb>" + dr["IDUsu"].ToString() + "<tr/><tr/>" + "<tr><tb>" + dr["EmailUsu"].ToString() + "<tr/><tr/>" + "<tr><tb>" + dr["_usuEmail"].ToString() + "<tr/><tr/>" + "<tr><tb>" + dr["_usuTelefone"].ToString() + "<tr/><tr/>";
             }
         }
     }
 
+
+   
+
+    
+
+    
+    /// <summary>
+    /// Metodo responsavel por colocar icone e trocar ele de acordo com o click do usuario
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void gdvUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         //Verificar se o componente que nós precisamos é uma linha válida

@@ -6,7 +6,8 @@
     <div class="container">
 
         <form id="ListaUsuarioForm" runat="server">
-            <asp:GridView ID="gdvUsuarios" runat="server"  AutoGenerateColumns="false" CssClass="table table-hover MyTable" Visible="false" OnRowDataBound="gdvUsuarios_RowDataBound" OnRowCommand="gdvUsuarios_RowCommand">
+
+            <asp:GridView ID="gdvUsuarios" runat="server" AutoGenerateColumns="false" CssClass="table table-hover MyTable" Visible="false" OnRowDataBound="gdvUsuarios_RowDataBound" OnRowCommand="gdvUsuarios_RowCommand">
 
 
                 <Columns>
@@ -23,16 +24,13 @@
                             <!-- Modificações css durante a empressão da tabela -->
                             <asp:LinkButton CommandArgument='<%# Bind("IDUsu") %>' ID="lkb_ativar" CssClass="btn btn-default" runat="server"></asp:LinkButton>
 
-                            <asp:LinkButton CommandArgument='<%# Bind("IDUsu") %>' ID="lkb_editar" CommandName="Encaminhar" Text="<i class='fa fa-link text-danger'> </i>"  CssClass="btn btn-default" runat="server"></asp:LinkButton>
+                            <asp:LinkButton CommandArgument='<%# Bind("IDUsu") %>' ID="lkb_editar" CommandName="Encaminhar" Text="<i class='fa fa-link text-danger'> </i>" CssClass="btn btn-default" runat="server"></asp:LinkButton>
 
 
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
-
-
             </asp:GridView>
-            <br />
             <asp:Label ID="lblMsg" runat="server"></asp:Label>
 
             <table class="table table-hover">

@@ -17,7 +17,27 @@
             <br />
             <br />
             <br />
-            <asp:GridView ID="gdvContratos" runat="server" CssClass="table table-hover" Visible="false"></asp:GridView>
+            <asp:GridView ID="gdvTipoDeContrato" runat="server" AutoGenerateColumns="false" CssClass="table table-hover MyTable" Visible="false" OnRowDataBound="gdvTipoDeContrato_RowDataBound" OnRowCommand="gdvTipoDeContrato_RowCommand">
+
+
+                <Columns>
+
+                    <asp:BoundField DataField="IDCnt" HeaderText="#" />
+                    <asp:BoundField DataField="NomeCnt" HeaderText="Nome" />
+                    <asp:BoundField DataField="ObservacaoCnt" HeaderText="Observação" />
+                    <asp:BoundField DataField="StatusAtivacaoCnt" HeaderText="Ativo" />
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <!-- Modificações css durante a empressão da tabela -->
+                            <asp:LinkButton CommandArgument='<%# Bind("IDCnt") %>' ID="lkb_ativar" CssClass="btn btn-default" runat="server"></asp:LinkButton>
+
+                            <asp:LinkButton CommandArgument='<%# Bind("IDCnt") %>' ID="lkb_editar" CommandName="Encaminhar" Text="<i class='fa fa-link text-danger'> </i>" CssClass="btn btn-default" runat="server"></asp:LinkButton>
+
+
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
             <br />
             <br />
             <br />

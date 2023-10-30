@@ -32,14 +32,23 @@ public partial class EditarFormaPagamento : System.Web.UI.Page
     protected void btnEditar_Click(object sender, EventArgs e)
     {
         FormaDePagamentoBD FormaDePagamentoBD = new FormaDePagamentoBD();
-        FormaDePagamento fop = FormaDePagamentoBD.Select(Convert.ToInt32(Session["USUARIO"]));
+        FormaDePagamento fop = new FormaDePagamento();
+        // Pega o valor da sessão.
+        int fop1 = Convert.ToInt32(Session["FORMAPAGAMENTO"]);
+        fop._fopID = fop1;
+        FormaDePagamentoBD.SelecionarFormaPagamento(fop);
         fop._fopNome = txtNomeFop.Text;
         fop._fopObservacao = txtObservacaoFop.Text;
         fop._fopStatusAtivacao = false;
         if (_statusAtivacao == 1)
         {
             fop._fopStatusAtivacao = true;
+        }else if(_statusAtivacao == 0)
+        {
+            fop._fopStatusAtivacao = false;
         }
+
+        FormaDePagamentoBD.Update(fop); 
 
 
         Response.Redirect("ListarFormaPagamento.aspx");

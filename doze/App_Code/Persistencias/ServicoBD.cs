@@ -75,4 +75,61 @@ public class ServicoBD
         return error;
 
     }
+
+    /// <summary>
+    /// Lista todos os usuarios e todas as informaçoes
+    /// </summary>
+    /// <returns></returns>
+    public static DataSet ListarServicos()
+    {
+        try
+        {
+
+            DataSet ds = new DataSet();
+            IDbConnection conn = ConexaoBD.Conexao(); ;
+            string sql = "SELECT * FROM Servico";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            IDataAdapter adp = ConexaoBD.Adapter(cmd);
+            adp.Fill(ds);
+            cmd.Dispose();
+            conn.Close();
+            conn.Dispose();
+            return ds;
+
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+
+    }
+
+    /// <summary>
+    /// Metodo responsavel por mudar o status de ativação de um determinado usuario
+    /// </summary>
+    /// <param name="codeUser"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static int ActiveInServico(int codeUser, int value)
+    {
+        int error = 0;
+        try
+        {
+            IDbConnection conn = ConexaoBD.Conexao();
+            string sql = "UPDATE Servico SET StatusAtivacaoSvc = ?VALUE WHERE IDSvc = ?CODIGO";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            cmd.Parameters.Add(ConexaoBD.Parametro("?VALUE", value));
+            cmd.Parameters.Add(ConexaoBD.Parametro("?CODIGO", codeUser));
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            conn.Dispose();
+            cmd.Dispose();
+        }
+        catch (Exception ex)
+        {
+            error = -2;
+
+        }
+        return error;
+    }
 }

@@ -101,4 +101,62 @@ public class FormaDePagamentoBD
         }
 
     }
+
+    /// <summary>
+    /// selecionar um usuario especifico
+    /// </summary>
+    /// <returns></returns>
+    public static DataSet SelecionarFormaPagamento(FormaDePagamento Fop)
+    {
+        try
+        {
+
+            DataSet ds = new DataSet();
+            IDbConnection conn = ConexaoBD.Conexao(); ;
+            string sql = "SELECT * FROM formadepagamento WHARE IDFop = ?ID";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            IDataAdapter adp = ConexaoBD.Adapter(cmd);
+            cmd.Parameters.Add(ConexaoBD.Parametro("?ID", Fop._fopID));
+            adp.Fill(ds);
+            cmd.Dispose();
+            conn.Close();
+            conn.Dispose();
+            return ds;
+
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+
+    }
+
+    /// <summary>
+    /// Metodo responsavel por mudar o status de ativação de uma determinada Forma de pagamento
+    /// </summary>
+    /// <param name="codeUser"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static int ActiveInFormaDePagamento(int codeUser, int value)
+    {
+        int error = 0;
+        try
+        {
+            IDbConnection conn = ConexaoBD.Conexao();
+            string sql = "UPDATE formadepagamento SET StatusAtivacaoFop = ?VALUE WHERE IDFop= ?CODIGO";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            cmd.Parameters.Add(ConexaoBD.Parametro("?VALUE", value));
+            cmd.Parameters.Add(ConexaoBD.Parametro("?CODIGO", codeUser));
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            conn.Dispose();
+            cmd.Dispose();
+        }
+        catch (Exception ex)
+        {
+            error = -2;
+
+        }
+        return error;
+    }
 }

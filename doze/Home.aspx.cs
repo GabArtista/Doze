@@ -7,6 +7,11 @@ using System.Web.UI.WebControls;
 
 public partial class Home : System.Web.UI.Page
 {
+    /// <summary>
+    /// Metodo que carrega quando abre a pagina
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["emailsemabase"] != null && Request.QueryString["emailcombase"] != null)
@@ -16,9 +21,17 @@ public partial class Home : System.Web.UI.Page
         }
 
     }
-
+    /// <summary>
+    /// Botão que cria a primeira solicitação do cliente.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void btnLead_Click(object sender, EventArgs e)
     {
+        
+
+        //Validar se o e-mail ja esta cadastrado
+        //Se sim, Perguntar se a conta pertence ao usuario (Como: Solicitando a senha) Jogar ele para a pagina dele. Notificar.
         Usuario usu = new Usuario();
         
         usu._usuNome = txtNome.Text;
@@ -31,14 +44,16 @@ public partial class Home : System.Web.UI.Page
         usu._usuStatusAtivacao = true;
 
 
+
+
         Solicitacao slc = new Solicitacao();
         //Pegar Data hora to sistema
         DateTime dataHoraAtual = DateTime.Now;
-        
+
         slc._slcData = dataHoraAtual;
         slc._slcDescricao = txtDescricao.Text;
         slc._slcObservacao = "Em Andamento...";
-        slc._slcDataFechamento = dataHoraAtual; // Iniciar esta data manualmente zerada
+        slc._slcDataFechamento = dataHoraAtual; // Fazer: Iniciar esta data manualmente zerada
         slc._slcLinkTrello = "Em Andamento";
         slc._slcStatusSolicitacao = "Em Andamento...";
         slc._slcGmail = "Em Andamento...";
@@ -47,10 +62,12 @@ public partial class Home : System.Web.UI.Page
         slc._slcEstrategiaCobranca = "Em Andamento...";
         slc._slcIDAdm = 0;
 
-        
 
-        UsuarioBD.Insert(usu);
-        SolicitacaoBD.Insert(slc);
+
+        UsuarioBD.Insert(usu);//Cria usuario
+        int idUsu;
+        idUsu = UsuarioBD.puxarIDUsuarioCadastrado();//Puchando o ID do Ultimo Usuario Cadastrado
+        SolicitacaoBD.Insert(slc, idUsu);// Cria Solicitação
 
     }
 

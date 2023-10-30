@@ -8,6 +8,11 @@ using System.Web.UI.WebControls;
 
 public partial class ListaSolicitacao : System.Web.UI.Page
 {
+    /// <summary>
+    /// Metodo que carrega quando a pagina abre
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
         
@@ -45,7 +50,27 @@ public partial class ListaSolicitacao : System.Web.UI.Page
     /// </summary>
     void LoadGrid()
     {
+
         DataSet ds = SolicitacaoBD.ListarSolicitacoesEUsuarios();
+
+
         Funcoes.FillGrid(gdvSolicitacoes, ds, lblMsg);
+    }
+    /// <summary>
+    /// Classe que aciona o botão editar na tabela de listagem das solicitações recebidas
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void gdvUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int codigo = Convert.ToInt32(e.CommandArgument.ToString());
+
+        //Se o comando Encaminhar for precionado 
+        if (e.CommandName == "Encaminhar")
+        {
+            Response.Redirect("http://localhost:49677/NegociacaoAdm.aspx?usu=" + codigo);
+
+        }
+
     }
 }

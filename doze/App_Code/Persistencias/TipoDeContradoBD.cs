@@ -103,4 +103,35 @@ public class TipoDeContratoBD
         return error;
 
     }
+
+    /// <summary>
+    /// Metodo responsavel por mudar o status de ativação de um determinado Contrato
+    /// </summary>
+    /// <param name="codeUser"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static int ActiveInContrato(int codeUser, int value)
+    {
+        int error = 0;
+        try
+        {
+            IDbConnection conn = ConexaoBD.Conexao();
+            string sql = "UPDATE TipoDeContrato SET StatusAtivacaoCnt = ?VALUE WHERE IDCnt = ?CODIGO";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            cmd.Parameters.Add(ConexaoBD.Parametro("?VALUE", value));
+            cmd.Parameters.Add(ConexaoBD.Parametro("?CODIGO", codeUser));
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            conn.Dispose();
+            cmd.Dispose();
+        }
+        catch (Exception ex)
+        {
+            error = -2;
+
+        }
+        return error;
+    }
+
+
 }

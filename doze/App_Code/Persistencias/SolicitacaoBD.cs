@@ -16,16 +16,16 @@ public class SolicitacaoBD
     /// </summary>
     /// <param name="Solicitacao">Instancia de objeto Solicitação Preenchido (NEW) </param>
     /// <returns> If retorno = 0 then Sucesso else ERRO (-1) </returns>
-    public static int Insert(Solicitacao solicitacao)
+    public static int Insert(Solicitacao solicitacao, int idUsu)
     {
         int retorno = 0;
         try
         {
             IDbConnection conn = ConexaoBD.Conexao();
             IDbCommand cmd;
-            string sql = "INSERT INTO solicitacao (IDUsu, IDCnt, IDFop, DataSlc, DescricaoSlc, ObservacaoSlc, DataFechamentoSlc, LinkTrelloSlc, StatusSlc, GMailSlc, GSenha, ValorAcordado, Estrategiacobranca, IDadm) VALUES (1,1,1, ?data, ?descricao, 'Aguardando..', '2023-07-20','Aguardando..', 'Aguardando..', 'Aguardando..', 'Aguardando..', 0, 'Aguardando..', 0);";
-            
-            
+            string sql = "INSERT INTO solicitacao (IDUsu, IDCnt, IDFop, DataSlc, DescricaoSlc, ObservacaoSlc, DataFechamentoSlc, LinkTrelloSlc, StatusSlc, GMailSlc, GSenha, ValorAcordado, Estrategiacobranca, IDadm) VALUES (" + idUsu + ",1,1, ?data, ?descricao, 'Aguardando..', '2023-07-20','Aguardando..', 'Aguardando..', 'Aguardando..', 'Aguardando..', 0, 'Aguardando..', 0);";
+
+
             conn = ConexaoBD.Conexao();
             cmd = ConexaoBD.Comando(sql, conn);
             cmd.Parameters.Add(ConexaoBD.Parametro("?data", solicitacao._slcData));
@@ -41,8 +41,8 @@ public class SolicitacaoBD
             cmd.Parameters.Add(ConexaoBD.Parametro("?idAdm", solicitacao._slcIDAdm));
             cmd.ExecuteNonQuery(); // Só par DML (Comandos SQL que não retornam valores como resposta)
             conn.Close();
-            conn.Dispose();
-            cmd.Dispose();
+            conn.Dispose(); //Limpar cach
+            cmd.Dispose(); //Limpar cach
         }
         catch (Exception ex)
         {
@@ -90,7 +90,7 @@ public class SolicitacaoBD
 
             DataSet ds = new DataSet();
             IDbConnection conn = ConexaoBD.Conexao(); ;
-            string sql = "SELECT solicitacao.IDSlc, usuario.nomeUsu, solicitacao.DescricaoSlc, solicitacao.DataSlc FROM solicitacao INNER JOIN usuario ON solicitacao.idUsu = usuario.idUsu; ";
+            string sql = "SELECT solicitacao.IDSlc, usuario.nomeUsu, solicitacao.DescricaoSlc, solicitacao.DataSlc, solicitacao.StatusSlc FROM solicitacao INNER JOIN usuario ON solicitacao.idUsu = usuario.idUsu; ";
             IDbCommand cmd = ConexaoBD.Comando(sql, conn);
             IDataAdapter adp = ConexaoBD.Adapter(cmd);
             adp.Fill(ds);
