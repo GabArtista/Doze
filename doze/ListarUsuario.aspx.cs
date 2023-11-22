@@ -11,10 +11,13 @@ public partial class ListarUsuario : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         //lblUrl.Text = Request.QueryString["email"].ToString();
-        if ((Session["USUARIO"] != null))
+        if (Session["USUARIO"] != null)
         {
 
             Usuario usu = (Usuario)Session["USUARIO"];
+
+            //Preencher os campos do Formulario dessa foram:
+
         }
         else
         {
@@ -26,6 +29,9 @@ public partial class ListarUsuario : System.Web.UI.Page
         {
             LoadGrid();
         }
+
+        //Cria um script facilmente:
+        //Page.ClientScript.RegisterStartupScript(GetType(), "alerta", "alert('Olá');", true);
     }
 
 
@@ -128,6 +134,7 @@ public partial class ListarUsuario : System.Web.UI.Page
         //Se o comando Encaminhar for precionado 
         if (e.CommandName == "Encaminhar")
         {
+            Session["USUARIOID"] = codigo;
             Response.Redirect("http://localhost:49677/EditarUsuario.aspx?usu=" + codigo);
 
         }

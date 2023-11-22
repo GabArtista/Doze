@@ -77,7 +77,10 @@ public class FormaDePagamentoBD
         }
         return 0;
     }
-
+    /// <summary>
+    /// Select com dataset
+    /// </summary>
+    /// <returns></returns>
     public static DataSet ListarFormasDePagamentos()
     {
         try
@@ -158,5 +161,29 @@ public class FormaDePagamentoBD
 
         }
         return error;
+    }
+    /// <summary>
+    /// Select sem Dataset
+    /// </summary>
+    /// <returns></returns>
+    public static FormaDePagamento Select()
+    {
+        FormaDePagamento fop = null;
+        IDbConnection conn = ConexaoBD.Conexao();
+        IDataReader dr;
+        string sql = "SELECT * FROM formadepagamento;";
+        IDbCommand comm = ConexaoBD.Comando(sql, conn);
+
+        dr = comm.ExecuteReader();
+
+        if (dr.Read())
+        {
+            fop = new FormaDePagamento();
+            fop._fopID = Convert.ToInt32(dr["IDFop"].ToString());
+            fop._fopNome = dr["NomeFop"].ToString();
+            fop._fopObservacao = dr["ObservacaoFop"].ToString();
+        }
+
+        return fop;
     }
 }

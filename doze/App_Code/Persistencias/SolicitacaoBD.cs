@@ -106,6 +106,34 @@ public class SolicitacaoBD
         }
 
     }
+    /// <summary>
+    /// Metodo para Listar as Solicitações que correspondem a um certo usuario
+    /// </summary>
+    /// <returns></returns>
+    public static DataSet ListarSolicitacoesDeUsuarios()
+    {
+        try
+        {
+
+            DataSet ds = new DataSet();
+            IDbConnection conn = ConexaoBD.Conexao(); ;
+            string sql = "SELECT * FROM solicitacao WHERE IDUsu = 2;";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            IDataAdapter adp = ConexaoBD.Adapter(cmd);
+            adp.Fill(ds);
+            cmd.Dispose();
+            conn.Close();
+            conn.Dispose();
+            return ds;
+
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+
+    }
+
 
     /// <summary>
     /// Metodo responsavel por atualizar os registros de Solicitação do banco de dados
@@ -170,5 +198,50 @@ public class SolicitacaoBD
             error = -2;
         }
         return error;
-    } 
+    }
+    /// <summary>
+    /// Selecionar uma solicitação especifica
+    /// </summary>
+    /// <returns></returns>
+    public static Solicitacao SelecionaSolicitacao(string id)
+    {
+        Solicitacao slc = null;
+        IDbConnection conn = ConexaoBD.Conexao();
+        IDataReader dr;
+        string sql = "SELECT solicitacao.IDSlc, solicitacao.DescricaoSlc, solicitacao.DataFechamentoSlc, solicitacao.DataSlc, solicitacao.EstrategiaCobranca, solicitacao.GMailSlc, solicitacao.GSenha, solicitacao.LinkTrelloSlc, solicitacao.ObservacaoSlc, solicitacao.StatusSlc, solicitacao.ValorAcordado, usuario.IDUsu, usuario.NomeUsu, usuario.EmailUsu, usuario.SenhaUsu, usuario.TelefoneUsu FROM solicitacao INNER JOIN usuario ON solicitacao.IDUsu = usuario.IDUsu WHERE IDSlc = " + id;
+        IDbCommand comm = ConexaoBD.Comando(sql, conn);
+        comm.Parameters.Add(ConexaoBD.Parametro("?id", id));
+
+        dr = comm.ExecuteReader();
+
+        if (dr.Read())
+        {
+            slc = new Solicitacao();
+            slc._slcID = Convert.ToInt32(dr["IDSlc"].ToString());
+            slc._slcDescricao = dr["DescricaoSlc"].ToString();
+            //slc._slcData = dr["DataSlc"].ToString(); --Como converter DATA
+            slc._slcObservacao = dr["ObservacaoSlc"].ToString();
+            //slc._slcDataFechamento = dr["DataFechamentoSlc"].ToString(); --Como converter DATA
+            slc._slcLinkTrello = dr["LinkTrelloSlc"].ToString();
+            slc._slcStatusSolicitacao = dr["StatusSlc"].ToString();
+            slc._slcGmail = dr["GMailSlc"].ToString();
+            slc._slcGsenha= dr["GSenha"].ToString();
+            slc._slcValorAcordado = Convert.ToInt32(dr["ValorAcordado"].ToString());
+            slc._slcEstrategiaCobranca = dr["EstrategiaCobranca"].ToString();
+
+            Usuario usuario = new Usuario();
+            usuario._usuID = Convert.ToInt32(dr["IDUsu"].ToString());
+            usuario._usuNome = dr["NomeUsu"].ToString();
+            usuario._usuEmail = dr["EmailUsu"].ToString();
+            usuario._usuSenha = dr["SenhaUsu"].ToString();
+            usuario._usuTelefone = dr["TelefoneUsu"].ToString();
+
+            slc.usu = usuario;
+
+
+
+        }
+
+        return slc;
+    }
 }

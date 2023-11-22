@@ -5,8 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Login : System.Web.UI.Page
+public partial class RedefinirSenha : System.Web.UI.Page
 {
+
 
     //Page Load é execultado quando a pagina é carregada!
     protected void Page_Load(object sender, EventArgs e)
@@ -17,33 +18,31 @@ public partial class Login : System.Web.UI.Page
         //2- Postback: Componente HTML
     }
 
-    protected void btnLogin_Click(object sender, EventArgs e)
+    protected void btnRedefinir_Click(object sender, EventArgs e)
     {
         if (!String.IsNullOrEmpty(txtEmail.Text) && !String.IsNullOrEmpty(txtSenha.Text))
         {
 
             String email = txtEmail.Text;
             String senha = txtSenha.Text;
-            Usuario u1 = UsuarioBD.AuthenticaUsuarioV2(email, Funcoes.HashSHA512(senha));
-
+            Usuario u1 = UsuarioBD.SelecionaUsuarioPorEmail(email);
+            
             if (u1 != null)
             {
-                                
-                //Sessão: Partição de memoria (cache ou Coockie) no servidor
-                //Colocando ID do Usuario Logado em Sessao
+                String senhaUsu = u1._usuSenha;
+                if (Funcoes.HashSHA512(senha) != senhaUsu)
+                {
+                    u1._usuSenha = Funcoes.HashSHA512(senha);
+                    UsuarioBD.Update(u1);
+                }
                 
-                Session["USUARIO"] = u1;//Guardando e-mail e senha do usuario logado
-
-                Response.Redirect("ADM.aspx?emailsembase=" + u1._usuEmail + "&emailcombase=" + Funcoes.HashBase64(u1._usuEmail));
             }
-            else if(u1 == null)
+            else if (u1 == null)
             {
                 Response.Redirect("Home.aspx");
             }
         }
 
-
-
-
     }
+
 }

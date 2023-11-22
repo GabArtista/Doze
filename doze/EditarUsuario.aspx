@@ -1,12 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="EditarUsuario.aspx.cs" Inherits="EditarUsuario" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
 
     <div class="container" style="padding: 100px 0;">
 
-        <div class="card" style="padding:30px 100px;">
+        <div class="card" style="padding: 30px 100px;">
             <div class="card-body">
                 <form id="CriarUsuarioForm" runat="server">
 
@@ -34,7 +34,7 @@
                                 <asp:ListItem Selected="True" Value="Cliente"> Cliente </asp:ListItem>
                                 <asp:ListItem Value="Em Andamento"> ADM </asp:ListItem>
                             </asp:DropDownList>
-                            
+
                         </div>
                     </div>
                     <div class="mb-3 form-check">
@@ -54,6 +54,8 @@
                             <asp:Button ID="btnVoltar" Text="Voltar" runat="server" OnClick="btnVoltar_Click" CssClass="btn btn-outline-danger" />
                         </div>
                     </div>
+
+                    
                 </form>
             </div>
         </div>

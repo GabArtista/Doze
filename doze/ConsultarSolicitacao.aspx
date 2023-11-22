@@ -1,16 +1,15 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="NegociacaoAdm.aspx.cs" Inherits="NegociacaoAdm" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ConsultarSolicitacao.aspx.cs" Inherits="ConsultarSolicitacao" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
-
+<asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
 
     <div class="container" style="padding: 10px 0">
         <form id="NegociacaoAdmForm" runat="server">
 
 
             <!-- Informação do Lead-->
-            <h1>Usuario</h1>
+            <h1>Negociação</h1>
 
             <div class="card" style="margin: 10px 0">
                 <div class="card-body" style="padding: 30px">
@@ -83,7 +82,7 @@
 
             <!-- Informações do contrato -->
 
-            <h1>Solicitação</h1>
+            <h1>Contrato</h1>
             <div class="card">
                 <div class="card-body" style="padding: 30px">
 
@@ -217,7 +216,7 @@
 
                     <div class="col">
                         <div class="input-group mb-3">
-                            <asp:DropDownList ID="ddnFormaDePagamento" runat="server" placeholder="Forma de Pagamento" CssClass="form-control" ClientIDMode="Static">
+                            <asp:DropDownList ID="txtFormaDePagamento" runat="server" placeholder="Forma de Pagamento" CssClass="form-control" ClientIDMode="Static">
                                 <asp:ListItem Value="Cartao credito"> Cartão Credito </asp:ListItem>
                                 <asp:ListItem Value="Cartao debito"> Cartão Debito </asp:ListItem>
                                 <asp:ListItem Value="Deposito"> Deposito </asp:ListItem>
@@ -281,9 +280,11 @@
             </div>
 
             <!-- Botão -->
-
-            <asp:LinkButton ID="btnLead" Text="ENVIAR" runat="server" CssClass="btn btn-light styleBotao" OnClick="btnLead_Click"></asp:LinkButton>
-
+            <div class="row">
+                <div class="col">
+                    <asp:Button ID="btnSair" Text="Sair" runat="server" OnClick="btnSair_Click" CssClass="btn btn-outline-danger" />
+                </div>
+            </div>
 
 
 
@@ -291,3 +292,4 @@
     </div>
 
 </asp:Content>
+

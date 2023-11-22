@@ -102,6 +102,21 @@
                     </div>
                 </div>
 
+                <!--Botão 6 -->
+                <div class="col">
+                    <div class="small-box bg-teal">
+                        <div class="inner">
+                            <h3>150</h3>
+                            <p>Midia</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <a href="ListarMidia.aspx" class="small-box-footer">Acessar <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Botão -->

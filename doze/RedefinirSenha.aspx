@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RedefinirSenha.aspx.cs" Inherits="RedefinirSenha" %>
 
 <!DOCTYPE html>
 
@@ -18,10 +18,6 @@
 
 
     <style>
-     
-
-    
-
         .fundo {
             background-color: #FFBD59;
             padding: 110px;
@@ -42,7 +38,7 @@
 
         .styleCard {
             padding: 40px 5%;
-            margin:auto;
+            margin: auto;
             max-width: 500px;
         }
         /*Fim Parte 1*/
@@ -58,8 +54,8 @@
 
                 <div class="card-header text-center styleCardHeader">
                     <h1>
-                        <b>Login</b>
-                        <p>Bem Vindo</p>
+                        <b>Redefinindo</b>
+                        <p>Sua senha</p>
                     </h1>
                 </div>
 
@@ -83,7 +79,16 @@
                         <!-- Senha -->
 
                         <div class="input-group mb-3">
-                            <asp:TextBox ID="txtSenha" runat="server" placeholder="******" CssClass="form-control" ClientIDMode="Static" TextMode="Password"></asp:TextBox>
+                            <asp:TextBox ID="txtSenha" runat="server" placeholder="Sua senha" CssClass="form-control" ClientIDMode="Static" TextMode="Password"></asp:TextBox>
+                            <div class="input-group-append">
+                                <div class="input-group-text" style="padding: 10px">
+                                    <span id="iconever" class="fas fa-eye-slash icone"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <asp:TextBox ID="txtConfirmaSenha" runat="server" placeholder="Confirma sua senha" CssClass="form-control" ClientIDMode="Static" TextMode="Password"></asp:TextBox>
                             <div class="input-group-append">
                                 <div class="input-group-text" style="padding: 10px">
                                     <span id="iconever" class="fas fa-eye-slash icone"></span>
@@ -98,15 +103,10 @@
                     <!-- Botão Login -->
 
 
-                    <asp:LinkButton ID="btnLogin" Text="LOGIN" runat="server" CssClass="btn btn-dark styleBotao" OnClick="btnLogin_Click"></asp:LinkButton>
+                    <asp:LinkButton ID="btnRedefinir" Text="Redefinir" runat="server" CssClass="btn btn-dark styleBotao" OnClick="btnRedefinir_Click"></asp:LinkButton>
 
 
                 </form>
-
-                <!-- Links esqueceu a senha e cadastrar -->
-                <p class="mb-1">
-                    <a href="RedefinirSenha.aspx">Esqueceu senha</a>
-                </p>
             </div>
         </div>
 
@@ -171,5 +171,7 @@
     <link href="ASSETS/CSS/adminlte.min.css" rel="stylesheet" />
 </body>
 </html>
+
+
 
 

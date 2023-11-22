@@ -12,7 +12,11 @@ using System.Web.UI.WebControls;
 /// </summary>
 public static class Funcoes
 {
-    
+    /// <summary>
+    /// Metodo para Criptografar
+    /// </summary>
+    /// <param name="texto"></param>
+    /// <returns></returns>
     public static string HashSHA512(string texto)
     {
         HashAlgorithm hashAlgoritimo = HashAlgorithm.Create("SHA-512");
@@ -21,6 +25,11 @@ public static class Funcoes
     }
 
 
+    /// <summary>
+    /// Metodo para Criptografar
+    /// </summary>
+    /// <param name="texto"></param>
+    /// <returns></returns>
     public static string HashBase64(string texto)
     {
 
@@ -32,7 +41,11 @@ public static class Funcoes
         return codifica;
     }
 
-
+    /// <summary>
+    /// Metodo para Transdormar Hash em sua String original Base64
+    /// </summary>
+    /// <param name="texto"></param>
+    /// <returns></returns>
 
     public static string HashBase64Returns(string textoBase64)
     {
@@ -51,7 +64,7 @@ public static class Funcoes
     public static int CountDataSet(DataSet ds)
     {
         int count = 0;
-        if(ds != null)
+        if (ds != null)
         {
             count = ds.Tables[0].Rows.Count;
         }
@@ -77,6 +90,37 @@ public static class Funcoes
         else
         {
             gdv.Visible = false;
+            lbl.Text = "Erro ao buscar registros";
+        }
+    }
+    /// <summary>
+    /// Metodo responsavel por escrever os dados da tabela Forma De Pagamento na coluna NomeFop para as opções 
+    /// </summary>
+    /// <param name="ddl"></param>
+    /// <param name="ds"></param>
+    /// <param name="lbl"></param>
+    public static void ddnGrid(DropDownList ddl, DataSet ds, Label lbl)
+    {
+        if (ds != null)
+        {
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0].DefaultView.ToTable();
+                ddl.DataSource = dt;
+                ddl.DataTextField = "NomeFop"; // Substitua "NomeDaColunaTexto" pelo nome da coluna que você deseja exibir como texto
+                ddl.DataValueField = "NomeFop"; // Substitua "NomeDaColunaValor" pelo nome da coluna que você deseja usar como valor
+                ddl.DataBind();
+                ddl.Visible = true;
+                ddl.Items.Insert(0, new ListItem("Selecione uma opção", "0"));
+            }
+            else
+            {
+                lbl.Text = "Não há registros";
+            }
+        }
+        else
+        {
+            ddl.Visible = false;
             lbl.Text = "Erro ao buscar registros";
         }
     }

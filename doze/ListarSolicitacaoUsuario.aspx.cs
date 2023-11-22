@@ -6,43 +6,33 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class ListaSolicitacao : System.Web.UI.Page
+public partial class ListarSolicitacaoUsuario : System.Web.UI.Page
 {
-    /// <summary>
-    /// Metodo que carrega quando a pagina abre
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
-        
         //lblUrl.Text = Request.QueryString["email"].ToString();
-        if ((Session["USUARIO"] != null)) { 
-            
+        if ((Session["USUARIO"] != null))
+        {
+
             Usuario usu = (Usuario)Session["USUARIO"];
             if (!Page.IsPostBack)
             {
                 LoadGrid();
             }
         }
-        else { 
+        else
+        {
             Response.Redirect("Login.aspx");
         }
-        
-    }
-
-    protected void btnEditar_Click(object sender, EventArgs e)
-    {
-
-        Response.Redirect("NegociacaoAdm.aspx");
 
     }
+
     protected void btnVoltar_Click(object sender, EventArgs e)
     {
-        
-        
-        Response.Redirect("ADM.aspx");
-        
+
+
+        Response.Redirect("Home.aspx");
+
     }
 
     /// <summary>
@@ -51,10 +41,10 @@ public partial class ListaSolicitacao : System.Web.UI.Page
     void LoadGrid()
     {
 
-        DataSet ds = SolicitacaoBD.ListarSolicitacoesEUsuarios();
-        Funcoes.FillGrid(gdvSolicitacoes, ds, lblMsg);
+        DataSet ds = SolicitacaoBD.ListarSolicitacoesDeUsuarios();
 
-        
+
+        Funcoes.FillGrid(gdvSolicitacoesUsuario, ds, lblMsg);
     }
     /// <summary>
     /// Classe que aciona o botão editar na tabela de listagem das solicitações recebidas
@@ -68,11 +58,10 @@ public partial class ListaSolicitacao : System.Web.UI.Page
         //Se o comando Encaminhar for precionado 
         if (e.CommandName == "Encaminhar")
         {
-            
+
             Usuario usu = (Usuario)Session["USUARIO"];
-            int idadm = usu._usuID;
-            SolicitacaoBD.admResponsavel(idadm, codigo);
-            Response.Redirect("http://localhost:49677/NegociacaoAdm.aspx?slc=" + codigo);
+            SolicitacaoBD.admResponsavel(Convert.ToInt32(Session["USUARIOID"]), codigo);
+            Response.Redirect("http://localhost:49677/ConsultarSolicitacao.aspx?slc=" + codigo);
         }
 
     }

@@ -132,6 +132,7 @@
 
          // Não funcionou
          //$('[dat-toggle="tooltip"]').tooltip()
+
      </script>
 </body>
 </html>

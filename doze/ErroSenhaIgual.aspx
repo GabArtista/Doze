@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ErroSenhaIgual.aspx.cs" Inherits="ErroSenhaIgual" %>
 
 <!DOCTYPE html>
 
@@ -42,7 +42,7 @@
 
         .styleCard {
             padding: 40px 5%;
-            margin:auto;
+            margin:150px auto;
             max-width: 500px;
         }
         /*Fim Parte 1*/
@@ -58,54 +58,15 @@
 
                 <div class="card-header text-center styleCardHeader">
                     <h1>
-                        <b>Login</b>
-                        <p>Bem Vindo</p>
+                        <b>ERRO</b>
+                        <p>A senha fornecida é igual a senha original do Usuario</p>
                     </h1>
                 </div>
 
 
-                <form id="LoginForm" runat="server">
-
-
-
-
-                    <!-- Email -->
-                    <div class="container" style="padding: 10px 0">
-                        <div class="input-group mb-3">
-                            <asp:TextBox ID="txtEmail" runat="server" placeholder="Exemple@exemple.com" CssClass="form-control" ClientIDMode="Static" TextMode="Email"></asp:TextBox>
-                            <div class="input-group-append">
-                                <div class="input-group-text" style="padding: 10px">
-                                    <span class="fas fa-envelope"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Senha -->
-
-                        <div class="input-group mb-3">
-                            <asp:TextBox ID="txtSenha" runat="server" placeholder="******" CssClass="form-control" ClientIDMode="Static" TextMode="Password"></asp:TextBox>
-                            <div class="input-group-append">
-                                <div class="input-group-text" style="padding: 10px">
-                                    <span id="iconever" class="fas fa-eye-slash icone"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-                    <!-- Botão Login -->
-
-
-                    <asp:LinkButton ID="btnLogin" Text="LOGIN" runat="server" CssClass="btn btn-dark styleBotao" OnClick="btnLogin_Click"></asp:LinkButton>
-
-
-                </form>
-
                 <!-- Links esqueceu a senha e cadastrar -->
                 <p class="mb-1">
-                    <a href="RedefinirSenha.aspx">Esqueceu senha</a>
+                    <a href="ListaSolicitacao.aspx">Voltar</a>
                 </p>
             </div>
         </div>

@@ -34,8 +34,6 @@ public class UsuarioBD
             cmd.Parameters.Add(ConexaoBD.Parametro("?statusAtivacao", usuario._usuStatusAtivacao));
             cmd.ExecuteNonQuery(); // Só par DML (Comandos SQL que não retornam valores como resposta)
             conn.Close();
-            conn.Dispose();
-            cmd.Dispose();
             conn.Dispose(); //Limpar cach
             cmd.Dispose(); //Limpar cach
         }
@@ -104,6 +102,12 @@ public class UsuarioBD
 
     /// <summary>
     /// Verificar se o usuario esta cadastrado
+    /// NÃO USADO
+    /// NÃO USADO
+    /// NÃO USADO
+    /// NÃO USADO
+    /// NÃO USADO
+    /// NÃO USADO
     /// </summary>
     /// <returns></returns>
     public static DataSet AuthenticaUsuario(String email, String senha)
@@ -145,6 +149,59 @@ public class UsuarioBD
             return null;
         }
 
+    }
+    /// <summary>
+    /// Verificar se o usuario esta cadastrado
+    /// </summary>
+    /// <returns></returns>
+    public static Usuario AuthenticaUsuarioV2(string email, string senha) {
+        Usuario usu = null;
+        IDbConnection conn = ConexaoBD.Conexao();
+        IDataReader dr;
+        string sql = "SELECT * FROM Usuario WHERE EmailUsu = ?email AND SenhaUsu = ?senha;";
+        IDbCommand comm = ConexaoBD.Comando(sql, conn);
+        comm.Parameters.Add(ConexaoBD.Parametro("?email", email));
+        comm.Parameters.Add(ConexaoBD.Parametro("?senha", senha));
+
+        dr = comm.ExecuteReader();
+
+        if (dr.Read())
+        {
+            usu = new Usuario();
+            usu._usuID = Convert.ToInt32(dr["IDUsu"].ToString());
+            usu._usuEmail = dr["EmailUsu"].ToString();
+            usu._usuSenha = dr["SenhaUsu"].ToString();
+            usu._usuTipoUsuario = dr["TipoUsu"].ToString();
+        }
+
+        return usu;
+        }
+    /// <summary>
+    /// Verificar se o usuario esta cadastrado
+    /// </summary>
+    /// <returns></returns>
+    public static Usuario SelecionaUsuario(string id)
+    {
+        Usuario usu = null;
+        IDbConnection conn = ConexaoBD.Conexao();
+        IDataReader dr;
+        string sql = "SELECT * FROM Usuario WHERE IDUsu = ?id;";
+        IDbCommand comm = ConexaoBD.Comando(sql, conn);
+        comm.Parameters.Add(ConexaoBD.Parametro("?id", id));
+
+        dr = comm.ExecuteReader();
+
+        if (dr.Read())
+        {
+            usu = new Usuario();
+            usu._usuID = Convert.ToInt32(dr["IDUsu"].ToString());
+            usu._usuNome = dr["NomeUsu"].ToString();
+            usu._usuTelefone = dr["TelefoneUsu"].ToString();
+            usu._usuEmail = dr["EmailUsu"].ToString();
+            usu._usuSenha = dr["SenhaUsu"].ToString();
+        }
+
+        return usu;
     }
     /// <summary>
     /// Retorna a ID do usuario que esta fazendo login 
@@ -237,5 +294,59 @@ public class UsuarioBD
         return error;
     }
 
+    /// <summary>
+    /// Selecionar um Usuario especifica
+    /// </summary>
+    /// <returns></returns>
+    public static Usuario SelecionaUsuarioESolicitacao(string id)
+    {
+        Usuario usu = null;
+        IDbConnection conn = ConexaoBD.Conexao();
+        IDataReader dr;
+        string sql = "SELECT solicitacao.IDSlc, solicitacao.DescricaoSlc, solicitacao.DataFechamentoSlc, solicitacao.DataSlc, solicitacao.EstrategiaCobranca, solicitacao.GMailSlc, solicitacao.GSenha, solicitacao.LinkTrelloSlc, solicitacao.ObservacaoSlc, solicitacao.StatusSlc, solicitacao.ValorAcordado, usuario.IDUsu, usuario.NomeUsu, usuario.EmailUsu, usuario.SenhaUsu, usuario.TelefoneUsu FROM solicitacao INNER JOIN usuario ON solicitacao.IDUsu = usuario.IDUsu;";
+        IDbCommand comm = ConexaoBD.Comando(sql, conn);
+        comm.Parameters.Add(ConexaoBD.Parametro("?id", id));
 
+        dr = comm.ExecuteReader();
+
+        if (dr.Read())
+        {
+            usu = new Usuario();
+            usu._usuID = Convert.ToInt32(dr["IDSlc"].ToString());
+            usu._usuNome = dr["NomeUsu"].ToString();
+            usu._usuEmail = dr["EmailUsu"].ToString();
+            usu._usuSenha = dr["SenhaUsu"].ToString();
+            usu._usuTelefone = dr["TelefoneUsu"].ToString();
+        }
+
+        return usu;
+    }
+    /// <summary>
+    /// Verificar se o E-Mail fornecido ja esta cadastrado
+    /// Usado em Redefinir Senha.
+    /// </summary>
+    /// <returns></returns>
+    public static Usuario SelecionaUsuarioPorEmail(string email)
+    {
+        Usuario usu = null;
+        IDbConnection conn = ConexaoBD.Conexao();
+        IDataReader dr;
+        string sql = "SELECT * FROM Usuario WHERE EmailUsu = ?email;";
+        IDbCommand comm = ConexaoBD.Comando(sql, conn);
+        comm.Parameters.Add(ConexaoBD.Parametro("?email", email));
+
+        dr = comm.ExecuteReader();
+
+        if (dr.Read())
+        {
+            usu = new Usuario();
+            usu._usuID = Convert.ToInt32(dr["IDUsu"].ToString());
+            usu._usuNome = dr["NomeUsu"].ToString();
+            usu._usuTelefone = dr["TelefoneUsu"].ToString();
+            usu._usuEmail = dr["EmailUsu"].ToString();
+            usu._usuSenha = dr["SenhaUsu"].ToString();
+        }
+
+        return usu;
+    }
 }
