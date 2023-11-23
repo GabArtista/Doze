@@ -106,7 +106,7 @@ public class FormaDePagamentoBD
     }
 
     /// <summary>
-    /// selecionar um usuario especifico
+    /// selecionar forma de pagamento especifica
     /// </summary>
     /// <returns></returns>
     public static DataSet SelecionarFormaPagamento(FormaDePagamento Fop)
@@ -185,5 +185,41 @@ public class FormaDePagamentoBD
         }
 
         return fop;
+    }
+    /// <summary>
+    /// selecionar um Tipo de Contrato especifico
+    /// </summary>
+    /// <returns></returns>
+    public static FormaDePagamento SelecionarFormaDePagamento2(int Fop)
+    {
+        try
+        {
+
+            FormaDePagamento obj = null;
+            IDbConnection conn = ConexaoBD.Conexao(); 
+            IDataReader dr;
+            string sql = "SELECT * FROM formadepagamento WHERE IDFop = ?ID";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            cmd.Parameters.Add(ConexaoBD.Parametro("?ID", Fop));
+            dr = cmd.ExecuteReader();
+
+            if (dr.Read())
+            {
+                obj = new FormaDePagamento();
+                obj._fopID = Convert.ToInt32(dr["IDFop"].ToString());
+                obj._fopNome = dr["NomeFop"].ToString();
+                obj._fopObservacao = dr["ObservacaoFop"].ToString();
+                obj._fopStatusAtivacao = Convert.ToBoolean(dr["StatusAtivacaoFop"]);
+
+            }
+
+            return obj;
+
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+
     }
 }

@@ -218,10 +218,7 @@
                     <div class="col">
                         <div class="input-group mb-3">
                             <asp:DropDownList ID="ddnFormaDePagamento" runat="server" placeholder="Forma de Pagamento" CssClass="form-control" ClientIDMode="Static">
-                                <asp:ListItem Value="Cartao credito"> Cartão Credito </asp:ListItem>
-                                <asp:ListItem Value="Cartao debito"> Cartão Debito </asp:ListItem>
-                                <asp:ListItem Value="Deposito"> Deposito </asp:ListItem>
-                                <asp:ListItem Value="Servico"> Serviço </asp:ListItem>
+                                
                             </asp:DropDownList>
 
                         </div>
@@ -255,11 +252,8 @@
 
                     <div class="col">
                         <div class="input-group mb-3">
-                            <asp:DropDownList ID="dpdTipoContrato" runat="server" placeholder="Tipo de Contrato" CssClass="form-control" ClientIDMode="Static">
-                                <asp:ListItem Value="Bimestral"> Bimestral </asp:ListItem>
-                                <asp:ListItem Value="Trimestral"> Trimestral </asp:ListItem>
-                                <asp:ListItem Value="Mensal"> Mensal </asp:ListItem>
-                                <asp:ListItem Value="Anual"> Anual </asp:ListItem>
+                            <asp:DropDownList ID="ddnTipoContrato" runat="server" placeholder="Tipo de Contrato" CssClass="form-control" ClientIDMode="Static">
+                                
                             </asp:DropDownList>
 
                         </div>

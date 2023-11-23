@@ -146,7 +146,7 @@ public class SolicitacaoBD
         try
         {
             IDbConnection conn = ConexaoBD.Conexao();
-            string sql = "UPDATE solicitacao SET DataSlc = ?data, DescricaoSlc = ?descricao, ObservacaoSlc = ?observacao, DataFechamentoSlc = ?dataFechamento, LinkTrelloSlc = ?linkTrelo, StatusSlc = ?status, GMailSlc = ?gMail, GSenhaSlc = ?gSenha, ValorAcordadoSlc = ?valorAcordado, EstrategiaCobrancaSlc = ?estrategiaCobranca, IDAdm = ?idAdm  WHERE IDSlc = ?id";
+            string sql = "UPDATE solicitacao SET IDCnt = ?idCnt, IDFop = ?idFop, DataSlc = ?data, DescricaoSlc = ?descricao, ObservacaoSlc = ?observacao, DataFechamentoSlc = ?dataFechamento, LinkTrelloSlc = ?linkTrello, StatusSlc = ?status, GMailSlc = ?gMail, GSenhaSlc = ?gSenha, ValorAcordadoSlc = ?valorAcordado, EstrategiaCobrancaSlc = ?estrategiaCobranca  WHERE IDSlc = ?id";
             IDbCommand cmd = ConexaoBD.Comando(sql, conn);
             cmd.Parameters.Add(ConexaoBD.Parametro("?id", solicitacao._slcID));
             cmd.Parameters.Add(ConexaoBD.Parametro("?data", solicitacao._slcData));
@@ -160,6 +160,18 @@ public class SolicitacaoBD
             cmd.Parameters.Add(ConexaoBD.Parametro("?valorAcordado", solicitacao._slcValorAcordado));
             cmd.Parameters.Add(ConexaoBD.Parametro("?estrategiaCobranca", solicitacao._slcEstrategiaCobranca));
             cmd.Parameters.Add(ConexaoBD.Parametro("?idAdm", solicitacao._slcIDAdm));
+
+            //Atualizando tipo de contrato
+            //pegar id do obj
+            TipoDeContrato cnt = new TipoDeContrato();
+            cnt = solicitacao.tdc;
+            //Atualizando tipo de contrato
+            //pegar id do obj
+            FormaDePagamento fop = new FormaDePagamento();
+            fop = solicitacao.fop;
+            cmd.Parameters.Add(ConexaoBD.Parametro("?idCnt", cnt._cntID));
+            cmd.Parameters.Add(ConexaoBD.Parametro("?idFop", fop._fopID));
+
             cmd.ExecuteNonQuery();
             conn.Close();
             conn.Dispose();
@@ -208,7 +220,7 @@ public class SolicitacaoBD
         Solicitacao slc = null;
         IDbConnection conn = ConexaoBD.Conexao();
         IDataReader dr;
-        string sql = "SELECT solicitacao.IDSlc, solicitacao.DescricaoSlc, solicitacao.DataFechamentoSlc, solicitacao.DataSlc, solicitacao.EstrategiaCobranca, solicitacao.GMailSlc, solicitacao.GSenha, solicitacao.LinkTrelloSlc, solicitacao.ObservacaoSlc, solicitacao.StatusSlc, solicitacao.ValorAcordado, usuario.IDUsu, usuario.NomeUsu, usuario.EmailUsu, usuario.SenhaUsu, usuario.TelefoneUsu FROM solicitacao INNER JOIN usuario ON solicitacao.IDUsu = usuario.IDUsu WHERE IDSlc = " + id;
+        string sql = "SELECT solicitacao.IDCnt, formadepagamento.NomeFop, formadepagamento.ObservacaoFop, formadepagamento.StatusAtivacaoFop, tipodecontrato.NomeCnt, tipodecontrato.ObservacaoCnt, tipodecontrato.StatusAtivacaoCnt, solicitacao.IDFop, solicitacao.IDSlc, solicitacao.DescricaoSlc, solicitacao.DataFechamentoSlc, solicitacao.DataSlc, solicitacao.EstrategiaCobrancaSlc, solicitacao.GMailSlc, solicitacao.GSenhaSlc, solicitacao.LinkTrelloSlc, solicitacao.ObservacaoSlc, solicitacao.StatusSlc, solicitacao.ValorAcordadoSlc, usuario.IDUsu, usuario.NomeUsu, usuario.EmailUsu, usuario.SenhaUsu, usuario.TelefoneUsu FROM solicitacao INNER JOIN usuario ON solicitacao.IDUsu = usuario.IDUsu INNER JOIN tipodecontrato ON solicitacao.IDCnt = tipodecontrato.IDCnt INNER JOIN formadepagamento ON solicitacao.IDFop = formadepagamento.IDFop WHERE IDSlc = " + id;
         IDbCommand comm = ConexaoBD.Comando(sql, conn);
         comm.Parameters.Add(ConexaoBD.Parametro("?id", id));
 
@@ -225,9 +237,9 @@ public class SolicitacaoBD
             slc._slcLinkTrello = dr["LinkTrelloSlc"].ToString();
             slc._slcStatusSolicitacao = dr["StatusSlc"].ToString();
             slc._slcGmail = dr["GMailSlc"].ToString();
-            slc._slcGsenha= dr["GSenha"].ToString();
-            slc._slcValorAcordado = Convert.ToInt32(dr["ValorAcordado"].ToString());
-            slc._slcEstrategiaCobranca = dr["EstrategiaCobranca"].ToString();
+            slc._slcGsenha= dr["GSenhaSlc"].ToString();
+            slc._slcValorAcordado = Convert.ToInt32(dr["ValorAcordadoSlc"].ToString());
+            slc._slcEstrategiaCobranca = dr["EstrategiaCobrancaSlc"].ToString();
 
             Usuario usuario = new Usuario();
             usuario._usuID = Convert.ToInt32(dr["IDUsu"].ToString());
@@ -238,7 +250,21 @@ public class SolicitacaoBD
 
             slc.usu = usuario;
 
+            FormaDePagamento forma = new FormaDePagamento();
+            forma._fopID = Convert.ToInt32(dr["IDFop"].ToString());
+            forma._fopNome = dr["NomeFop"].ToString();
+            forma._fopObservacao = dr["ObservacaoFop"].ToString();
+            forma._fopStatusAtivacao = (bool) Convert.ToBoolean(Convert.ToInt32(dr["StatusAtivacaoFop"].ToString()));
 
+            slc.fop = forma;
+
+            TipoDeContrato contrato = new TipoDeContrato();
+            contrato._cntID = Convert.ToInt32(dr["IDCnt"].ToString());
+            contrato._cntNome = dr["NomeCnt"].ToString();
+            contrato._cntObservacao = dr["ObservacaoCnt"].ToString();
+            contrato._cntStatusAtivacao = (bool) Convert.ToBoolean(Convert.ToInt32(dr["StatusAtivacaoCnt"].ToString()));
+
+            slc.tdc = contrato;
 
         }
 

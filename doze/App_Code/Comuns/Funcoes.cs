@@ -70,7 +70,12 @@ public static class Funcoes
         }
         return count;
     }
-
+    /// <summary>
+    /// Metodo responsavel por escrever os dados da tabela Forma De Pagamento na coluna NomeFop para as opções do DropDown
+    /// </summary>
+    /// <param name="gdv"></param>
+    /// <param name="ds"></param>
+    /// <param name="lbl"></param>
     public static void FillGrid(GridView gdv, DataSet ds, Label lbl)
     {
         if (ds != null)
@@ -94,12 +99,12 @@ public static class Funcoes
         }
     }
     /// <summary>
-    /// Metodo responsavel por escrever os dados da tabela Forma De Pagamento na coluna NomeFop para as opções 
+    /// Metodo responsavel por escrever os dados da tabela Forma De Pagamento na coluna NomeFop para as opções do DropDown
     /// </summary>
     /// <param name="ddl"></param>
     /// <param name="ds"></param>
     /// <param name="lbl"></param>
-    public static void ddnGrid(DropDownList ddl, DataSet ds, Label lbl)
+    public static void ddnGrid(DropDownList ddl, DataSet ds, Label lbl, string nomeColunaTexto, string nomeColunaValor)
     {
         if (ds != null)
         {
@@ -107,8 +112,8 @@ public static class Funcoes
             {
                 DataTable dt = ds.Tables[0].DefaultView.ToTable();
                 ddl.DataSource = dt;
-                ddl.DataTextField = "NomeFop"; // Substitua "NomeDaColunaTexto" pelo nome da coluna que você deseja exibir como texto
-                ddl.DataValueField = "NomeFop"; // Substitua "NomeDaColunaValor" pelo nome da coluna que você deseja usar como valor
+                ddl.DataTextField = nomeColunaTexto; // nome da coluna que você deseja exibir como texto
+                ddl.DataValueField = nomeColunaValor; // nome da coluna que você deseja usar como valor
                 ddl.DataBind();
                 ddl.Visible = true;
                 ddl.Items.Insert(0, new ListItem("Selecione uma opção", "0"));

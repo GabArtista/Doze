@@ -132,6 +132,42 @@ public class TipoDeContratoBD
         }
         return error;
     }
+    /// <summary>
+    /// selecionar um Tipo de Contrato especifico
+    /// </summary>
+    /// <returns></returns>
+    public static TipoDeContrato SelecionarTipoDeContrato(int Cnt)
+    {
+        try
+        {
+
+            TipoDeContrato obj = null;
+            IDbConnection conn = ConexaoBD.Conexao(); ;
+            IDataReader dr;
+            string sql = "SELECT * FROM tipodecontrato WHERE IDCnt = ?ID";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            cmd.Parameters.Add(ConexaoBD.Parametro("?ID", Cnt));
+            dr = cmd.ExecuteReader();
+
+            if (dr.Read())
+            {
+                obj = new TipoDeContrato();
+                obj._cntID = Convert.ToInt32(dr["IDCnt"].ToString());
+                obj._cntNome = dr["NomeCnt"].ToString();
+                obj._cntObservacao = dr["ObservacaoCnt"].ToString();
+                obj._cntStatusAtivacao = Convert.ToBoolean(dr["StatusAtivacaoCnt"]);
+ 
+            }
+
+            return obj;
+
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+
+    }
 
 
 }

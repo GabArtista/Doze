@@ -14,6 +14,9 @@ public partial class NegociacaoAdm : System.Web.UI.Page
     Boolean StatusAtivacao;
     Boolean StatusConexao;
     string TipoDeUsuario;
+
+    FormaDePagamento fopglob = new FormaDePagamento();
+    TipoDeContrato cntglob = new TipoDeContrato();
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -38,15 +41,22 @@ public partial class NegociacaoAdm : System.Web.UI.Page
 
                     Solicitacao solicitacao = SolicitacaoBD.SelecionaSolicitacao(codigo);
                     txtDescricao.Text = solicitacao._slcDescricao.ToString();
-                    txtDiaFechamento.Text = solicitacao._slcDataFechamento.ToString();
-                    txtEstrategiaDecobranca.Text = solicitacao._slcEstrategiaCobranca;
+                    txtDiaFechamento.Text = solicitacao._slcDataFechamento.ToShortDateString();
                     txtLinkTrello.Text = solicitacao._slcLinkTrello;
                     txtStatus.Text = solicitacao._slcStatusSolicitacao;
                     txtGmail.Text = solicitacao._slcGmail;
-                    txtGSenha.Text = solicitacao._slcGsenha;
-                    txtEstrategiaDecobranca.Text = solicitacao._slcEstrategiaCobranca;
+                    txtGSenha.Text = solicitacao._slcGsenha.ToString();
                     txtValorAcordado.Text = solicitacao._slcValorAcordado.ToString();
                     txtObservacaoContrato.Text = solicitacao._slcObservacao;
+                    txtEstrategiaDecobranca.Text = solicitacao._slcEstrategiaCobranca.ToString();
+
+                    //carregar forma de pagamento
+                    LoadGrid();
+
+                    fopglob = solicitacao.fop;
+                    ddnFormaDePagamento.SelectedValue = Convert.ToString(fopglob._fopID);
+                    cntglob = solicitacao.tdc;
+                    ddnTipoContrato.SelectedValue = Convert.ToString(cntglob._cntID);
 
 
                     Usuario usuario = new Usuario();
@@ -66,7 +76,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                     //Guardando senha original do usuario para não perder. Caso a senha não sofrer alteração, fornecer a mesma senha novamente
                     Session["USUARIOSENHA"] = usuario._usuSenha;
 
-
+                    
 
                 }
 
@@ -76,8 +86,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
 
 
 
-        //carregar forma de pagamento
-        LoadGrid();
+
 
 
     }
@@ -89,18 +98,27 @@ public partial class NegociacaoAdm : System.Web.UI.Page
     {
         Label lblMsg = null;
         DataSet ds = FormaDePagamentoBD.ListarFormasDePagamentos();
-        Funcoes.ddnGrid(ddnFormaDePagamento, ds, lblMsg);
-        LoadDropDown(ds);
+        Funcoes.ddnGrid(ddnFormaDePagamento, ds, lblMsg, "NomeFop", "IDFop");
+        LoadDropDown(ds, ddnFormaDePagamento);
 
+        DataSet ds2 = TipoDeContratoBD.ListarTiposDeContratos();
+        Funcoes.ddnGrid(ddnTipoContrato, ds2, lblMsg, "NomeCnt", "IDCnt");
+        LoadDropDown(ds2, ddnTipoContrato);
     }
-
-    void LoadDropDown(DataSet ds)
+    /// <summary>
+    /// Metodo que Mostra as informações do Banco.
+    /// </summary>
+    /// <param name="ds"></param>
+    /// <param name="ddn"></param>
+    void LoadDropDown(DataSet ds, DropDownList ddn)
     {
         int qtd = Funcoes.CountDataSet(ds);
         if (qtd > 0)
         {
-            ddnFormaDePagamento.DataSource = ds.Tables[0].DefaultView;
-            ddnFormaDePagamento.DataBind();
+            ddn.DataSource = ds.Tables[0].DefaultView;
+            ddn.DataBind();
+
+
         }
     }
 
@@ -109,6 +127,13 @@ public partial class NegociacaoAdm : System.Web.UI.Page
 
 
         //Como Atribuir esta classe
+    }
+    protected void ddnFormaDePagamento_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        // Guarde o valor do ID selecionado
+
+
+        // Faça algo com o valor
     }
     /// <summary>
     /// Botão que atualiza os dados no banco de dados
@@ -126,7 +151,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
             String email = txtEmail.Text;
             String senha = txtSenha.Text;
             String telefone = txtTelefone.Text;
-            
+
 
             //Criando usuario com a informação nas TextBox do Font End
             Usuario usu = new Usuario();
@@ -158,6 +183,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
 
             Solicitacao slc = new Solicitacao();
 
+            slc._slcID = Convert.ToInt32(Request.QueryString["slc"]);
             slc._slcDescricao = descricao;
             slc._slcGmail = gMail;
             slc._slcGsenha = gSenha;
@@ -165,7 +191,10 @@ public partial class NegociacaoAdm : System.Web.UI.Page
             slc._slcObservacao = observacaoContrato;
             slc._slcStatusSolicitacao = status;
             slc._slcValorAcordado = Convert.ToDouble(valor);
-            
+            slc._slcEstrategiaCobranca = estrategiaCobranca;
+            slc._slcDataFechamento = Convert.ToDateTime(dataFechamento);
+
+
 
             //Informação do serviço
 
@@ -173,15 +202,18 @@ public partial class NegociacaoAdm : System.Web.UI.Page
 
             //FORMA DE PAGAMENTO
             //Informação da Forma de Pagamento
-            String formaPagamento = ddnFormaDePagamento.Text;
-            String observacaoFop = txtObservacaoFop.Text;
 
+            String observacaoFop = txtObservacaoFop.Text;
+            //int idfop = Convert.ToInt32(ddnFormaDePagamento.SelectedValue);
+            fopglob._fopID = Convert.ToInt32(ddnFormaDePagamento.SelectedValue.ToString());
+            slc.fop = FormaDePagamentoBD.SelecionarFormaDePagamento2(fopglob._fopID);
             //CONTRATO
             //Informação Tipo de Contrato
 
-            String tipoContrato = dpdTipoContrato.Text;
             String observacaoTipoContrato = txtObservacaoTipoContrato.Text;
-
+            cntglob._cntID = Convert.ToInt32(ddnTipoContrato.SelectedValue.ToString());
+            slc.tdc = TipoDeContratoBD.SelecionarTipoDeContrato(cntglob._cntID);
+            
 
 
 
@@ -222,11 +254,19 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                     usu._usuSenha = Funcoes.HashSHA512(senha);
                     //atualizar usuario
                     UsuarioBD.Update(usu);
-                    //Response.Redirect("ListaSolicitacao.aspx");
+
+
+
+
                 }
             }
 
 
+            //Atualizar Solicitação
+            if (SolicitacaoBD.Update(slc) == 0)
+            {
+                Response.Redirect("ListaSolicitacao.aspx");
+            }
 
 
 

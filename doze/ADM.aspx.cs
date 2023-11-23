@@ -9,7 +9,7 @@ public partial class ADM : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //lblUrl.Text = Request.QueryString["email"].ToString();
+        
         if ((Session["USUARIO"] != null))
         {
 
