@@ -23,7 +23,7 @@ public class SolicitacaoBD
         {
             IDbConnection conn = ConexaoBD.Conexao();
             IDbCommand cmd;
-            string sql = "INSERT INTO solicitacao (IDUsu, IDCnt, IDFop, DataSlc, DescricaoSlc, ObservacaoSlc, DataFechamentoSlc, LinkTrelloSlc, StatusSlc, GMailSlc, GSenha, ValorAcordado, Estrategiacobranca, IDadm) VALUES (" + idUsu + ",1,1, ?data, ?descricao, 'Aguardando..', '2023-07-20','Aguardando..', 'Aguardando..', 'Aguardando..', 'Aguardando..', 0, 'Aguardando..', 0);";
+            string sql = "INSERT INTO solicitacao (IDUsu, IDCnt, IDFop, DataSlc, DescricaoSlc, ObservacaoSlc, DataFechamentoSlc, LinkTrelloSlc, StatusSlc, GMailSlc, GSenhaSlc, ValorAcordadoSlc, EstrategiacobrancaSlc, IDadm) VALUES (" + idUsu + ",1,1, ?data, ?descricao, 'Aguardando..', '2023-07-20','Aguardando..', 'Aguardando..', 'Aguardando..', 'Aguardando..', 0, 'Aguardando..', 0);";
 
 
             conn = ConexaoBD.Conexao();

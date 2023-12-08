@@ -39,7 +39,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                     //Usuario usuAdm = (Usuario)Session["USUARIO"];
 
 
-                    Solicitacao solicitacao = SolicitacaoBD.SelecionaSolicitacao(codigo);
+                    Solicitacao solicitacao = SolicitacaoBD.SelecionaSolicitacao(codigo); //INNER JOIN
                     txtDescricao.Text = solicitacao._slcDescricao.ToString();
                     txtDiaFechamento.Text = solicitacao._slcDataFechamento.ToShortDateString();
                     txtLinkTrello.Text = solicitacao._slcLinkTrello;
@@ -52,6 +52,9 @@ public partial class NegociacaoAdm : System.Web.UI.Page
 
                     //carregar forma de pagamento
                     LoadGrid();
+
+                    //Carregando serviços
+                    CriarChecks();
 
                     fopglob = solicitacao.fop;
                     ddnFormaDePagamento.SelectedValue = Convert.ToString(fopglob._fopID);
@@ -106,7 +109,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
         LoadDropDown(ds2, ddnTipoContrato);
     }
     /// <summary>
-    /// Metodo que Mostra as informações do Banco.
+    /// Metodo que Mostra as informações do Banco para o Dropdown.
     /// </summary>
     /// <param name="ds"></param>
     /// <param name="ddn"></param>
@@ -122,6 +125,35 @@ public partial class NegociacaoAdm : System.Web.UI.Page
         }
     }
 
+    /// <summary>
+    /// Metodo que Mostra as informações do Banco para o CheckBox.
+    /// </summary>
+    /// <param name="ds"></param>
+    /// <param name="ddn"></param>
+    void CriarChecks()
+    {
+        DataSet ds = ServicoBD.ListarServicos();
+        int qtd = Funcoes.CountDataSet(ds);
+        if (qtd > 0)
+        {
+
+            checkBoxListSvc.DataSource = ds.Tables[0].DefaultView;
+            checkBoxListSvc.DataTextField = "NomeSvc";
+            checkBoxListSvc.DataValueField = "IDSvc";
+            checkBoxListSvc.DataBind();
+        }
+
+    }
+
+    protected void btnPegarCheck_Click(object sender, EventArgs e)
+    {
+        foreach (ListItem item in checkBoxListSvc.Items)
+        {
+            if (item.Selected) {
+                //lblChecks.Text += item.Value + " - " + item.Text;
+            }
+        }
+    }
     protected void Checkservic_Clicked(object sender, EventArgs e)
     {
 
@@ -213,9 +245,62 @@ public partial class NegociacaoAdm : System.Web.UI.Page
             String observacaoTipoContrato = txtObservacaoTipoContrato.Text;
             cntglob._cntID = Convert.ToInt32(ddnTipoContrato.SelectedValue.ToString());
             slc.tdc = TipoDeContratoBD.SelecionarTipoDeContrato(cntglob._cntID);
+
+
+
+            //CASOS DE ERROS
+
+            Boolean temerro = false;
+            if (usu._usuNome == "")
+            {
+                temerro = true;
+                Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Nome não pode ser vazio.');", true);
+            }
+
+            if (usu._usuEmail == "")
+            {
+                temerro = true;
+                Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Email não pode ser vazio.');", true);
+            }
+
+            if (usu._usuTelefone == "")
+            {
+                temerro = true;
+                Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Telefone não pode ser vazio.');", true);
+            }
+
+
+            if(slc._slcDescricao == "")
+            {
+                temerro = true;
+                Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Decrição não pode ser vazio.');", true);
+            }
+
+            if (slc._slcDataFechamento == null)
+            {
+                temerro = true;
+                Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Data Fechamento não pode ser vazio.');", true);
+            }
+
+            if (slc._slcEstrategiaCobranca == "")
+            {
+                temerro = true;
+                Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Estratégia de Cobrança não pode ser vazio.');", true);
+            }
+
+            if (slc._slcGmail == "")
+            {
+                temerro = true;
+                Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Gmail não pode ser vazio.');", true);
+            }
+
+            if (slc._slcObservacao == "")
+            {
+                temerro = true;
+                Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Observação não pode ser vazio.');", true);
+            }
+
             
-
-
 
 
 
@@ -262,11 +347,16 @@ public partial class NegociacaoAdm : System.Web.UI.Page
             }
 
 
-            //Atualizar Solicitação
-            if (SolicitacaoBD.Update(slc) == 0)
+
+            if (temerro == false)
             {
-                Response.Redirect("ListaSolicitacao.aspx");
+                //Atualizar Solicitação
+                if (SolicitacaoBD.Update(slc) == 0)
+                {
+                    Response.Redirect("ListaSolicitacao.aspx");
+                }
             }
+            
 
 
 

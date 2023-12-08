@@ -113,13 +113,9 @@ public partial class ListarFormaPagamento : System.Web.UI.Page
         //Se o comando Encaminhar for precionado 
         if (e.CommandName == "Encaminhar")
         {
-            FormaDePagamento fop1 = new FormaDePagamento();
-            fop1._fopID = codigo;
             
-
-
             //Sessão: Partição de memoria (cache ou Coockie) no servidor
-            Session["FORMAPAGAMENTO"] = fop1;
+            Session["FORMAPAGAMENTO"] = codigo;
             Response.Redirect("http://localhost:49677/EditarFormaPagamento.aspx?" + codigo);
 
         }

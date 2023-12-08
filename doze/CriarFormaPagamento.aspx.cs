@@ -12,14 +12,17 @@ public partial class CriarFormaPagamento : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         //lblUrl.Text = Request.QueryString["email"].ToString();
-        if ((Session["USUARIO"] != null))
+        if (!Page.IsPostBack)
         {
+            if ((Session["USUARIO"] != null))
+            {
 
-            Usuario usu = (Usuario)Session["USUARIO"];
-        }
-        else
-        {
-            Response.Redirect("Login.aspx");
+                Usuario usu = (Usuario)Session["USUARIO"];
+            }
+            else
+            {
+                Response.Redirect("Login.aspx");
+            }
         }
     }
 
@@ -35,19 +38,34 @@ public partial class CriarFormaPagamento : System.Web.UI.Page
         fop._fopObservacao = txtObservacaoFop.Text;
 
         //Status de ativação apartir da criação sempre sera True
-        fop._fopStatusAtivacao = true; 
+        fop._fopStatusAtivacao = true;
         /* Desnecessario
         if (_statusAtivacao == 1)
         {
             fop._fopStatusAtivacao = true;
         }
         */
-        
 
-        FormaDePagamentoBD.Insert(fop);
+        Boolean temerro = false;
+        //Verificando se todos os campos fotam preenchidos:
+        if (fop._fopNome == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: Nome não pode ser vazio.');", true);
+        }else
 
-        //Se o cadastro for sussedido:
-        Response.Redirect("ListarFormaPagamento.aspx");
+        if (fop._fopObservacao == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: E-mail não pode ser vazio.');", true);
+        }else
+
+        if (temerro == false)
+        {
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Sucesso!');", true);
+            FormaDePagamentoBD.Insert(fop);
+        }
+       
 
     }
 

@@ -27,9 +27,40 @@ public partial class EditarUsuario : System.Web.UI.Page
     }
     protected void btnEditar_Click(object sender, EventArgs e)
     {
+        Usuario usu = new Usuario();
+        int usuID = Convert.ToInt32(Session["USUARIOID"]);
+        usu._usuID = usuID;
+        UsuarioBD.SelecionaUsuario(Convert.ToString(usu._usuID));
+        usu._usuNome = txtNomeUsu.Text;
+        usu._usuEmail = txtEmailUsu.Text;
+        usu._usuSenha = txtSenhaUsu.Text;
+        usu._usuTelefone = txtTelefoneUsu.Text;
+        usu._usuTipoUsuario = txtTipoUsuarioUsu.Text;
 
-        Response.Redirect("ListarUsuario.aspx");
+        Boolean temerro = false;
+        if(usu._usuNome == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Nome não pode ser vazio.');", true);
+        }
 
+        if(usu._usuEmail == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Email não pode ser vazio.');", true);
+        }
+
+        if(usu._usuTelefone == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Telefone não pode ser vazio.');", true);
+        }
+
+        if(temerro == false)
+        {
+            UsuarioBD.Update(usu);
+            Response.Redirect("ListarUsuario.aspx");
+        }
     }
 
     protected void btnVoltar_Click(object sender, EventArgs e)

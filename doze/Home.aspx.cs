@@ -14,12 +14,14 @@ public partial class Home : System.Web.UI.Page
     /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["emailsemabase"] != null && Request.QueryString["emailcombase"] != null)
+        if (!Page.IsPostBack)
         {
-            string emailsemabase = Request.QueryString["emailsemabase"].ToString();
-            string emailcombase = Request.QueryString["emailcombase"].ToString();
+            if (Request.QueryString["emailsemabase"] != null && Request.QueryString["emailcombase"] != null)
+            {
+                string emailsemabase = Request.QueryString["emailsemabase"].ToString();
+                string emailcombase = Request.QueryString["emailcombase"].ToString();
+            }
         }
-
     }
     /// <summary>
     /// Botão que cria a primeira solicitação do cliente.
@@ -62,13 +64,49 @@ public partial class Home : System.Web.UI.Page
         slc._slcEstrategiaCobranca = "Em Andamento...";
         slc._slcIDAdm = 0;
 
+        Boolean temerro = false;
+        //Verificando se todos os campos fotam preenchidos:
+        if (usu._usuNome == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: Nome não pode ser vazio.');", true);
+        }
 
+        if (usu._usuEmail == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: E-mail não pode ser vazio.');", true);
+        }
 
-        UsuarioBD.Insert(usu);//Cria usuario
-        int idUsu;
-        idUsu = UsuarioBD.puxarIDUsuarioCadastrado();//Puchando o ID do Ultimo Usuario Cadastrado
-        SolicitacaoBD.Insert(slc, idUsu);// Cria Solicitação
+        if (usu._usuTelefone == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: Telefone não pode ser vazio.');", true);
+        }
 
+        if (usu._usuSenha == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: Senha não pode ser vazio');", true);
+        }
+
+        if (slc._slcDescricao == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: Descricao não pode ser vazio');", true);
+        }
+
+        if(temerro == false)
+        {
+            UsuarioBD.Insert(usu);//Cria usuario
+            int idUsu;
+            idUsu = UsuarioBD.puxarIDUsuarioCadastrado();//Puchando o ID do Ultimo Usuario Cadastrado
+            SolicitacaoBD.Insert(slc, idUsu);// Cria Solicitação
+
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Sucesso!');", true);
+        }
+        
+            
     }
 
 

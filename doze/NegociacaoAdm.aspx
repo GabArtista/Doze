@@ -91,7 +91,7 @@
                     <!-- Serviços -->
 
                     <div class="form-check form-switch">
-                        <asp:CheckBox ID="cbServico" runat="server" AutoPostBack="True" Text="- Serviço 01" TextAlign="Right" OnCheckedChanged="Checkservic_Clicked" />
+                        <asp:CheckBoxList ID="checkBoxListSvc" runat="server" AutoPostBack="True" TextAlign="Right"></asp:CheckBoxList>
                     </div>
 
 

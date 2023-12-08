@@ -48,10 +48,25 @@ public partial class EditarFormaPagamento : System.Web.UI.Page
             fop._fopStatusAtivacao = false;
         }
 
-        FormaDePagamentoBD.Update(fop); 
 
+        Boolean temerro = false;
+        if (fop._fopNome == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: Nome não pode ser vazio.');", true);
+        }
+        if (fop._fopObservacao == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: Observação não pode ser vazio.');", true);
+        }
+        if (temerro == false)
+        {
+            FormaDePagamentoBD.Update(fop);
+            Response.Redirect("ListarFormaPagamento.aspx");
+        }
 
-        Response.Redirect("ListarFormaPagamento.aspx");
+        
 
     }
 
