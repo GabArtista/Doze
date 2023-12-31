@@ -36,7 +36,7 @@
 
                        <asp:Image runat="server" ID="im" ImageUrl='<%# Bind("IDSlc") %>'´ />
 
-                            <asp:LinkButton CommandArgument='<%# Bind("IDMda") %>' ID="lkb_editar" CommandName="Encaminhar" Text="<i class='fa fa-link text-danger'> </i>" CssClass="btn btn-default" runat="server"></asp:LinkButton>
+                            <asp:LinkButton CommandArgument='<%# Bind("IDMda") %>' ID="lkb_editar" CommandName="Encaminhar" Text="<i class='fa fa-edit text-danger'> </i>" CssClass="btn btn-default" runat="server"></asp:LinkButton>
 
 
                         </itemtemplate>

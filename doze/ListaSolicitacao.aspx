@@ -33,7 +33,7 @@
                     <asp:TemplateField>
                         <ItemTemplate>
                             <!-- Modificações css durante a empressão da tabela -->
-                            <asp:LinkButton CommandArgument='<%# Bind("IDSlc") %>' ID="lkb_editar" CommandName="Encaminhar" Text="<i class='fa fa-link text-danger'> </i>" CssClass="btn btn-default" runat="server"></asp:LinkButton>
+                            <asp:LinkButton CommandArgument='<%# Bind("IDSlc") %>' ID="lkb_editar" CommandName="Encaminhar" Text="<i class='fa fa-edit text-danger'> </i>" CssClass="btn btn-default" runat="server"></asp:LinkButton>
                             </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

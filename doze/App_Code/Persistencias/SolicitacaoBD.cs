@@ -231,9 +231,9 @@ public class SolicitacaoBD
             slc = new Solicitacao();
             slc._slcID = Convert.ToInt32(dr["IDSlc"].ToString());
             slc._slcDescricao = dr["DescricaoSlc"].ToString();
-            //slc._slcData = dr["DataSlc"].ToString(); --Como converter DATA
+            slc._slcData = Convert.ToDateTime(dr["DataSlc"].ToString());
             slc._slcObservacao = dr["ObservacaoSlc"].ToString();
-            //slc._slcDataFechamento = dr["DataFechamentoSlc"].ToString(); --Como converter DATA
+            slc._slcDataFechamento = Convert.ToDateTime(dr["DataFechamentoSlc"].ToString()); 
             slc._slcLinkTrello = dr["LinkTrelloSlc"].ToString();
             slc._slcStatusSolicitacao = dr["StatusSlc"].ToString();
             slc._slcGmail = dr["GMailSlc"].ToString();

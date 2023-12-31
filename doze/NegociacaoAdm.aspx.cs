@@ -14,9 +14,15 @@ public partial class NegociacaoAdm : System.Web.UI.Page
     Boolean StatusAtivacao;
     Boolean StatusConexao;
     string TipoDeUsuario;
+    string datatime;
+
+    //Criar um Array de acordo com a quantidade de serviços que foram listados
+    //Para poder selecionar todos os serviços selecionados e cadastralos
+    int[,] servicoSelecionado;
 
     FormaDePagamento fopglob = new FormaDePagamento();
     TipoDeContrato cntglob = new TipoDeContrato();
+    ServicoContratado sctglob = new ServicoContratado();
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -33,12 +39,15 @@ public partial class NegociacaoAdm : System.Web.UI.Page
 
 
 
-
+                    //Pegar ID da Solicitação
                     string codigo = Request.QueryString["slc"].ToString();
+
+                    //Pegar ID do serviço
+                    int IDSvc = 0;
                     //Pegar Objeto da Session:
                     //Usuario usuAdm = (Usuario)Session["USUARIO"];
 
-
+                    
                     Solicitacao solicitacao = SolicitacaoBD.SelecionaSolicitacao(codigo); //INNER JOIN
                     txtDescricao.Text = solicitacao._slcDescricao.ToString();
                     txtDiaFechamento.Text = solicitacao._slcDataFechamento.ToShortDateString();
@@ -49,12 +58,19 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                     txtValorAcordado.Text = solicitacao._slcValorAcordado.ToString();
                     txtObservacaoContrato.Text = solicitacao._slcObservacao;
                     txtEstrategiaDecobranca.Text = solicitacao._slcEstrategiaCobranca.ToString();
+                    datatime = Convert.ToString(solicitacao._slcData);
+                    Session["datatime"] = datatime;
+
+                    //Trabalhar Servico Contratado
+
 
                     //carregar forma de pagamento
                     LoadGrid();
 
                     //Carregando serviços
-                    CriarChecks();
+                    CriarChecks(solicitacao);
+
+                    
 
                     fopglob = solicitacao.fop;
                     ddnFormaDePagamento.SelectedValue = Convert.ToString(fopglob._fopID);
@@ -79,7 +95,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                     //Guardando senha original do usuario para não perder. Caso a senha não sofrer alteração, fornecer a mesma senha novamente
                     Session["USUARIOSENHA"] = usuario._usuSenha;
 
-                    
+
 
                 }
 
@@ -130,10 +146,13 @@ public partial class NegociacaoAdm : System.Web.UI.Page
     /// </summary>
     /// <param name="ds"></param>
     /// <param name="ddn"></param>
-    void CriarChecks()
+    void CriarChecks(Solicitacao solicitacao)
     {
+       
         DataSet ds = ServicoBD.ListarServicos();
         int qtd = Funcoes.CountDataSet(ds);
+        servicoSelecionado = new int [qtd, qtd];
+
         if (qtd > 0)
         {
 
@@ -141,6 +160,27 @@ public partial class NegociacaoAdm : System.Web.UI.Page
             checkBoxListSvc.DataTextField = "NomeSvc";
             checkBoxListSvc.DataValueField = "IDSvc";
             checkBoxListSvc.DataBind();
+
+        }
+
+    }
+
+    void GuardarCheck(Solicitacao solicitacao)
+    {
+
+        foreach (ListItem item in checkBoxListSvc.Items)
+        {
+            if (item.Selected)
+            {
+               
+
+                ServicoContratado sct = new ServicoContratado();
+                sct._Slc = solicitacao._slcID;
+                sct._Svc = Convert.ToInt32(item.Value);
+
+                ServicoContratadoBD.Insert(sct);
+
+            }
         }
 
     }
@@ -149,7 +189,8 @@ public partial class NegociacaoAdm : System.Web.UI.Page
     {
         foreach (ListItem item in checkBoxListSvc.Items)
         {
-            if (item.Selected) {
+            if (item.Selected)
+            {
                 //lblChecks.Text += item.Value + " - " + item.Text;
             }
         }
@@ -159,6 +200,17 @@ public partial class NegociacaoAdm : System.Web.UI.Page
 
 
         //Como Atribuir esta classe
+        if (checkBoxListSvc.SelectedItem.Selected) {
+            int servico = Convert.ToInt32(checkBoxListSvc.SelectedValue);
+
+            //Pegar ID da Solicitação
+            int codigo = Convert.ToInt32(Request.QueryString["slc"].ToString());
+
+            servicoSelecionado [servico, codigo] = 1;
+
+        }
+        
+
     }
     protected void ddnFormaDePagamento_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -224,7 +276,9 @@ public partial class NegociacaoAdm : System.Web.UI.Page
             slc._slcStatusSolicitacao = status;
             slc._slcValorAcordado = Convert.ToDouble(valor);
             slc._slcEstrategiaCobranca = estrategiaCobranca;
-            slc._slcDataFechamento = Convert.ToDateTime(dataFechamento);
+            slc._slcDataFechamento = Convert.ToDateTime(dataFechamento );
+            datatime = Session["datatime"].ToString();
+            slc._slcData = Convert.ToDateTime(datatime);
 
 
 
@@ -270,7 +324,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
             }
 
 
-            if(slc._slcDescricao == "")
+            if (slc._slcDescricao == "")
             {
                 temerro = true;
                 Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Decrição não pode ser vazio.');", true);
@@ -300,7 +354,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                 Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Observação não pode ser vazio.');", true);
             }
 
-            
+
 
 
 
@@ -337,16 +391,17 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                 else
                 {
                     usu._usuSenha = Funcoes.HashSHA512(senha);
-                    //atualizar usuario
-                    UsuarioBD.Update(usu);
-
-
-
+                   
 
                 }
+
+                
             }
+            //atualizar usuario
+            UsuarioBD.Update(usu);
 
 
+            GuardarCheck(slc);
 
             if (temerro == false)
             {
@@ -356,8 +411,8 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                     Response.Redirect("ListaSolicitacao.aspx");
                 }
             }
-            
 
+            
 
 
         }
