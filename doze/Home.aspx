@@ -28,6 +28,29 @@
                         <div class="card">
                             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
+                                    
+                                    <div class="carousel-item active">
+                                        <img src="ASSETS/IMG/1.png" class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="ASSETS/IMG/2.png" class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="ASSETS/IMG/3.png" class="d-block w-100" alt="...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h3>Desenvolvimento de Software</h3>
+                                <p class="card-text">Conquiste o Site que irá elevar o nível de sua empresa com um sistema feito 100% para seu negocio</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md  g-5">
+                        <div class="card">
+                            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
                                     <div class="carousel-item active">
                                         <img src="ASSETS/IMG/servico seo/1a.png" class="d-block w-100" alt="..." />
                                     </div>
@@ -44,29 +67,7 @@
                             </div>
                             <div class="card-body">
                                 <h3>SEO</h3>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md  g-5">
-                        <div class="card">
-                            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="ASSETS/IMG/1.png" class="d-block w-100" alt="...">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="ASSETS/IMG/2.png" class="d-block w-100" alt="...">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="ASSETS/IMG/3.png" class="d-block w-100" alt="...">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <h3>WebDesign</h3>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <p class="card-text">Posicionar seu site nas plataformas de busca como o Google é essencial para alcançar seus clientes!</p>
                             </div>
                         </div>
                     </div>
@@ -87,33 +88,13 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <h3>Marketing</h3>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <h3>Marketing Digital</h3>
+                                <p class="card-text">É preciso estar em todos os lugares! Um bom posicionamento nas Redes é muito importante para elevar a confiabilidade da sua empresa!</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md  g-5">
-                        <div class="card">
-                            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="ASSETS/IMG/analista/Analista1.png" class="d-block w-100" alt="...">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="ASSETS/IMG/analista/Analista2.png" class="d-block w-100" alt="...">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="ASSETS/IMG/analista/Analista3.png" class="d-block w-100" alt="...">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <h3>Eventos</h3>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                        </div>
-                    </div>
+                  
 
                 </div>
 
@@ -124,8 +105,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <h3>Sobre</h3>
-                            <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                            <h3>Sobre nós</h3>
+                            <p class="card-text">A Doze Crew atua no mercado do Desenvolvimento de Software e Marketing a mais de 7 anos! Nossos desenvolvedores estão prontos e preparados para qualquer desafio, enquanto nossa equipe de Marketing já criaram campanhar iconicas que marcaram os lugares por onde passaram! A Doze oferece soluções de software para empresas desde o desenvolvimento de site, garantir o posicionamento do mesmo nas plataformas de busca (Google por exemplo), posicionar a empresa em Midias Sociais e até mesmo criar identidade virtual para empresas começarem no mercado! Contando sempre com profissionais que sabem oque estão fazendo!</p>
                         </div>
                     </div>
                 </div>

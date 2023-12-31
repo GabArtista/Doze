@@ -75,9 +75,35 @@ public class ServicoBD
         return error;
 
     }
-
     /// <summary>
-    /// Lista todos os usuarios e todas as informaçoes
+    /// Lista todos os Serviços e todas as informaçoes com status de ativado
+    /// </summary>
+    /// <returns></returns>
+    public static DataSet ListarServicosAtivados()
+    {
+        try
+        {
+
+            DataSet ds = new DataSet();
+            IDbConnection conn = ConexaoBD.Conexao(); ;
+            string sql = "SELECT * FROM Servico WHERE StatusAtivacaoSvc = 1";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            IDataAdapter adp = ConexaoBD.Adapter(cmd);
+            adp.Fill(ds);
+            cmd.Dispose();
+            conn.Close();
+            conn.Dispose();
+            return ds;
+
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+
+    }
+    /// <summary>
+    /// Lista todos os Serviços e todas as informaçoes
     /// </summary>
     /// <returns></returns>
     public static DataSet ListarServicos()

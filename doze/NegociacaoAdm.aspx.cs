@@ -149,7 +149,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
     void CriarChecks(Solicitacao solicitacao)
     {
        
-        DataSet ds = ServicoBD.ListarServicos();
+        DataSet ds = ServicoBD.ListarServicosAtivados();
         int qtd = Funcoes.CountDataSet(ds);
         servicoSelecionado = new int [qtd, qtd];
 
