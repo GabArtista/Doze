@@ -158,4 +158,33 @@ public class ServicoBD
         }
         return error;
     }
+
+    /// <summary>
+    /// selecionar Servico especifico
+    /// </summary>
+    /// <returns></returns>
+    public static DataSet SelecionarServico(Servico svc)
+    {
+        try
+        {
+
+            DataSet ds = new DataSet();
+            IDbConnection conn = ConexaoBD.Conexao(); ;
+            string sql = "SELECT * FROM servico WHARE IDSvc = ?ID";
+            IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            IDataAdapter adp = ConexaoBD.Adapter(cmd);
+            cmd.Parameters.Add(ConexaoBD.Parametro("?ID", svc._svcID));
+            adp.Fill(ds);
+            cmd.Dispose();
+            conn.Close();
+            conn.Dispose();
+            return ds;
+
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+
+    }
 }

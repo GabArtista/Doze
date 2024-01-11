@@ -28,8 +28,32 @@ public partial class EditarContrato : System.Web.UI.Page
     }
     protected void btnEditar_Click(object sender, EventArgs e)
     {
+        TipoDeContrato cnt = new TipoDeContrato();
+        int cntID = Convert.ToInt32(Session["TIPODECONTRATO"]);
+        cnt._cntID = cntID;
+        TipoDeContratoBD.SelecionarTipoDeContrato(cnt._cntID);
+        cnt._cntNome = txtNomeCtr.Text;
+        cnt._cntObservacao = txtObservacaoCtr.Text;
 
-        Response.Redirect("ListarContrato.aspx");
+        Boolean temerro = false;
+        if (cnt._cntNome == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Nome não pode ser vazio.');", true);
+        }
+
+        if (cnt._cntObservacao == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Email não pode ser vazio.');", true);
+        }
+
+        if (temerro == false)
+        {
+            TipoDeContratoBD.Update(cnt);
+            Response.Redirect("ListarContrato.aspx");
+        }
+        
 
     }
 

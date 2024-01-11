@@ -103,6 +103,7 @@ public partial class ListarContrato : System.Web.UI.Page
         //Se o comando Encaminhar for precionado 
         if (e.CommandName == "Encaminhar")
         {
+            Session["TIPODECONTRATO"] = codigo;
             Response.Redirect("http://localhost:49677/EditarContrato.aspx?cnt=" + codigo);
 
         }

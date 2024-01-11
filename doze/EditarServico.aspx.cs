@@ -28,7 +28,40 @@ public partial class EditarServico : System.Web.UI.Page
     protected void btnEditar_Click(object sender, EventArgs e)
     {
 
-        Response.Redirect("ListarServico.aspx");
+        ServicoBD Servico = new ServicoBD();
+        Servico svc = new Servico();
+        // Pega o valor da sessão.
+        int svc1 = Convert.ToInt32(Session["SERVICO"]);
+        svc._svcID = svc1;
+        ServicoBD.SelecionarServico(svc);
+        svc._svcNome = txtNomeSvc.Text;
+        svc._svcObservacao = txtObservacaoSvc.Text;
+        svc._svcPreco = Convert.ToDouble(txtPrecoSvc.Text);
+        svc._svcStatusAtivacao = true;
+        
+
+
+        Boolean temerro = false;
+        if (svc._svcNome == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: Nome não pode ser vazio.');", true);
+        }
+        if (svc._svcObservacao == "")
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: Observação não pode ser vazio.');", true);
+        }
+        if (svc._svcPreco == 0)
+        {
+            temerro = true;
+            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: Preço não pode ser vazio.');", true);
+        }
+        if (temerro == false)
+        {
+            ServicoBD.Update(svc);
+            Response.Redirect("ListarServico.aspx");
+        }
 
     }
 

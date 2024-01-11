@@ -158,7 +158,7 @@ public class UsuarioBD
         Usuario usu = null;
         IDbConnection conn = ConexaoBD.Conexao();
         IDataReader dr;
-        string sql = "SELECT * FROM Usuario WHERE EmailUsu = ?email AND SenhaUsu = ?senha;";
+        string sql = "SELECT * FROM Usuario WHERE EmailUsu = ?email AND SenhaUsu = ?senha AND TipoUsu = 'ADM';";
         IDbCommand comm = ConexaoBD.Comando(sql, conn);
         comm.Parameters.Add(ConexaoBD.Parametro("?email", email));
         comm.Parameters.Add(ConexaoBD.Parametro("?senha", senha));

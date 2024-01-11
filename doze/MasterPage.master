@@ -67,7 +67,7 @@
 
 
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand bg-body-tertiary">
         <div class="container-fluid">
 
             <a class="navbar-brand" href="Home.aspx">
@@ -75,19 +75,20 @@
                 Crew
             </a>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class=" navbar-collapse " id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#contato">Contato</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="login.aspx">Login</a>
+                        <a class="nav-link active" href="login.aspx">Login</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true" href="#">Rede Social</a>
+                        <a class="nav-link" aria-disabled="true" href="https://linklist.bio/dozecrewcontatos">Rede Social</a>
                     </li>
+
 
                     <asp:ContentPlaceHolder ID="head" runat="server">
                     </asp:ContentPlaceHolder>

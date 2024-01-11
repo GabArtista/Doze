@@ -101,6 +101,7 @@ public partial class ListarServico : System.Web.UI.Page
         //Se o comando Encaminhar for precionado 
         if (e.CommandName == "Encaminhar")
         {
+            Session["SERVICO"] = codigo;
             Response.Redirect("http://localhost:49677/EditarServico.aspx?svc=" + codigo);
 
         }
