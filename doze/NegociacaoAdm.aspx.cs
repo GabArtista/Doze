@@ -148,23 +148,40 @@ public partial class NegociacaoAdm : System.Web.UI.Page
     /// <param name="ddn"></param>
     void CriarChecks(Solicitacao solicitacao)
     {
-       
         DataSet ds = ServicoBD.ListarServicosAtivados();
         int qtd = Funcoes.CountDataSet(ds);
         servicoSelecionado = new int [qtd, qtd];
 
         if (qtd > 0)
         {
-
             checkBoxListSvc.DataSource = ds.Tables[0].DefaultView;
             checkBoxListSvc.DataTextField = "NomeSvc";
             checkBoxListSvc.DataValueField = "IDSvc";
             checkBoxListSvc.DataBind();
 
-        }
+            //Pegando os serviços selecionados em uma determinada solicitação
+            int[] itensMarcados = ServicoContratadoBD.SelecionaServcoContratado(solicitacao._slcID);
 
+            for( int i = 0; i < checkBoxListSvc.Items.Count; i++)
+            {
+                //Pegando id da checkbox
+                int id = Convert.ToInt32(checkBoxListSvc.Items[i].Value);
+
+                //Se o id do chack box conferir com algum id que veio da classe relacionada
+                if (itensMarcados.Contains(id))
+                {
+                    //Selecionando o item
+                    checkBoxListSvc.Items[i].Selected = true;
+                }
+            }
+        }
     }
 
+    /// <summary>
+    /// Metodo que Guarda as informações no Banco.
+    /// </summary>
+    /// <param name="ds"></param>
+    /// <param name="ddn"></param>
     void GuardarCheck(Solicitacao solicitacao)
     {
 
@@ -172,14 +189,18 @@ public partial class NegociacaoAdm : System.Web.UI.Page
         {
             if (item.Selected)
             {
-               
-
-                ServicoContratado sct = new ServicoContratado();
+               ServicoContratado sct = new ServicoContratado();
                 sct._Slc = solicitacao._slcID;
                 sct._Svc = Convert.ToInt32(item.Value);
 
                 ServicoContratadoBD.Insert(sct);
+            }else if (!item.Selected)
+            {
+                ServicoContratado sct = new ServicoContratado();
+                sct._Slc = solicitacao._slcID;
+                sct._Svc = Convert.ToInt32(item.Value);
 
+                ServicoContratadoBD.Delete(sct);
             }
         }
 
