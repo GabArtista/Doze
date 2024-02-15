@@ -40,8 +40,8 @@ public partial class ListarSolicitacaoUsuario : System.Web.UI.Page
     /// </summary>
     void LoadGrid()
     {
-
-        DataSet ds = SolicitacaoBD.ListarSolicitacoesDeUsuarios();
+        Usuario usu = (Usuario)Session["USUARIO"];
+        DataSet ds = SolicitacaoBD.ListarSolicitacoesDeUsuarios(usu._usuID);
 
 
         Funcoes.FillGrid(gdvSolicitacoesUsuario, ds, lblMsg);
@@ -59,7 +59,7 @@ public partial class ListarSolicitacaoUsuario : System.Web.UI.Page
         if (e.CommandName == "Encaminhar")
         {
 
-            Usuario usu = (Usuario)Session["USUARIO"];
+            //Usuario usu = (Usuario)Session["USUARIO"];
             SolicitacaoBD.admResponsavel(Convert.ToInt32(Session["USUARIOID"]), codigo);
             Response.Redirect("http://localhost:49677/ConsultarSolicitacao.aspx?slc=" + codigo);
         }

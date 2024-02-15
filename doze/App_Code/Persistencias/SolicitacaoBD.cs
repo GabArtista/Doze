@@ -110,15 +110,16 @@ public class SolicitacaoBD
     /// Metodo para Listar as Solicitações que correspondem a um certo usuario
     /// </summary>
     /// <returns></returns>
-    public static DataSet ListarSolicitacoesDeUsuarios()
+    public static DataSet ListarSolicitacoesDeUsuarios(int id)
     {
         try
         {
 
             DataSet ds = new DataSet();
             IDbConnection conn = ConexaoBD.Conexao(); ;
-            string sql = "SELECT * FROM solicitacao WHERE IDUsu = 2;";
+            string sql = "SELECT * FROM solicitacao WHERE IDUsu = ?id;";
             IDbCommand cmd = ConexaoBD.Comando(sql, conn);
+            cmd.Parameters.Add(ConexaoBD.Parametro("?id", id));
             IDataAdapter adp = ConexaoBD.Adapter(cmd);
             adp.Fill(ds);
             cmd.Dispose();

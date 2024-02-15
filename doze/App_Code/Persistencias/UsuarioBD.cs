@@ -180,6 +180,33 @@ public class UsuarioBD
     /// Verificar se o usuario esta cadastrado
     /// </summary>
     /// <returns></returns>
+    public static Usuario AuthenticaCliente(string email, string senha)
+    {
+        Usuario usu = null;
+        IDbConnection conn = ConexaoBD.Conexao();
+        IDataReader dr;
+        string sql = "SELECT * FROM Usuario WHERE EmailUsu = ?email AND SenhaUsu = ?senha AND TipoUsu = 'Cliente';";
+        IDbCommand comm = ConexaoBD.Comando(sql, conn);
+        comm.Parameters.Add(ConexaoBD.Parametro("?email", email));
+        comm.Parameters.Add(ConexaoBD.Parametro("?senha", senha));
+
+        dr = comm.ExecuteReader();
+
+        if (dr.Read())
+        {
+            usu = new Usuario();
+            usu._usuID = Convert.ToInt32(dr["IDUsu"].ToString());
+            usu._usuEmail = dr["EmailUsu"].ToString();
+            usu._usuSenha = dr["SenhaUsu"].ToString();
+            usu._usuTipoUsuario = dr["TipoUsu"].ToString();
+        }
+
+        return usu;
+    }
+    /// <summary>
+    /// Verificar se o usuario esta cadastrado
+    /// </summary>
+    /// <returns></returns>
     public static Usuario SelecionaUsuario(string id)
     {
         Usuario usu = null;

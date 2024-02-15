@@ -24,21 +24,40 @@ public partial class Login : System.Web.UI.Page
 
             String email = txtEmail.Text;
             String senha = txtSenha.Text;
+
+            //Verifica se o usuario é um ADM
             Usuario u1 = UsuarioBD.AuthenticaUsuarioV2(email, Funcoes.HashSHA512(senha));
 
             if (u1 != null)
             {
-                                
+
                 //Sessão: Partição de memoria (cache ou Coockie) no servidor
                 //Colocando ID do Usuario Logado em Sessao
-                
+
                 Session["USUARIO"] = u1;//Guardando e-mail e senha do usuario logado
 
                 Response.Redirect("ADM.aspx?emailsembase=" + u1._usuEmail + "&emailcombase=" + Funcoes.HashBase64(u1._usuEmail));
             }
-            else if(u1 == null)
+            else if (u1 == null)
             {
-                Response.Redirect("Home.aspx");
+
+
+                //Verifica se o usuario é um Cliente
+                u1 = UsuarioBD.AuthenticaCliente(email, Funcoes.HashSHA512(senha));
+
+
+                if (u1 != null)
+                {
+                    Session["USUARIO"] = u1;//Guardando e-mail e senha do usuario logado
+
+                    Response.Redirect("ListarSolicitacaoUsuario.aspx?emailsembase=" + u1._usuEmail + "&emailcombase=" + Funcoes.HashBase64(u1._usuEmail));
+                }
+                else if (u1 == null)
+                {
+
+                    //COLOCAR MENSAGEM DE ERRO AQUI
+                    Response.Redirect("Home.aspx");
+                }
             }
         }
 
