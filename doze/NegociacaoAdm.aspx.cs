@@ -47,7 +47,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                     //Pegar Objeto da Session:
                     //Usuario usuAdm = (Usuario)Session["USUARIO"];
 
-                    
+
                     Solicitacao solicitacao = SolicitacaoBD.SelecionaSolicitacao(codigo); //INNER JOIN
                     txtDescricao.Text = solicitacao._slcDescricao.ToString();
                     txtDiaFechamento.Text = solicitacao._slcDataFechamento.ToShortDateString();
@@ -70,7 +70,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                     //Carregando serviços
                     CriarChecks(solicitacao);
 
-                    
+
 
                     fopglob = solicitacao.fop;
                     ddnFormaDePagamento.SelectedValue = Convert.ToString(fopglob._fopID);
@@ -150,7 +150,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
     {
         DataSet ds = ServicoBD.ListarServicosAtivados();
         int qtd = Funcoes.CountDataSet(ds);
-        servicoSelecionado = new int [qtd, qtd];
+        servicoSelecionado = new int[qtd, qtd];
 
         if (qtd > 0)
         {
@@ -162,7 +162,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
             //Pegando os serviços selecionados em uma determinada solicitação
             int[] itensMarcados = ServicoContratadoBD.SelecionaServcoContratado(solicitacao._slcID);
 
-            for( int i = 0; i < checkBoxListSvc.Items.Count; i++)
+            for (int i = 0; i < checkBoxListSvc.Items.Count; i++)
             {
                 //Pegando id da checkbox
                 int id = Convert.ToInt32(checkBoxListSvc.Items[i].Value);
@@ -189,12 +189,13 @@ public partial class NegociacaoAdm : System.Web.UI.Page
         {
             if (item.Selected)
             {
-               ServicoContratado sct = new ServicoContratado();
+                ServicoContratado sct = new ServicoContratado();
                 sct._Slc = solicitacao._slcID;
                 sct._Svc = Convert.ToInt32(item.Value);
 
                 ServicoContratadoBD.Insert(sct);
-            }else if (!item.Selected)
+            }
+            else if (!item.Selected)
             {
                 ServicoContratado sct = new ServicoContratado();
                 sct._Slc = solicitacao._slcID;
@@ -206,40 +207,6 @@ public partial class NegociacaoAdm : System.Web.UI.Page
 
     }
 
-    protected void btnPegarCheck_Click(object sender, EventArgs e)
-    {
-        foreach (ListItem item in checkBoxListSvc.Items)
-        {
-            if (item.Selected)
-            {
-                //lblChecks.Text += item.Value + " - " + item.Text;
-            }
-        }
-    }
-    protected void Checkservic_Clicked(object sender, EventArgs e)
-    {
-
-
-        //Como Atribuir esta classe
-        if (checkBoxListSvc.SelectedItem.Selected) {
-            int servico = Convert.ToInt32(checkBoxListSvc.SelectedValue);
-
-            //Pegar ID da Solicitação
-            int codigo = Convert.ToInt32(Request.QueryString["slc"].ToString());
-
-            servicoSelecionado [servico, codigo] = 1;
-
-        }
-        
-
-    }
-    protected void ddnFormaDePagamento_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        // Guarde o valor do ID selecionado
-
-
-        // Faça algo com o valor
-    }
     /// <summary>
     /// Botão que atualiza os dados no banco de dados
     /// </summary>
@@ -297,7 +264,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
             slc._slcStatusSolicitacao = status;
             slc._slcValorAcordado = Convert.ToDouble(valor);
             slc._slcEstrategiaCobranca = estrategiaCobranca;
-            slc._slcDataFechamento = Convert.ToDateTime(dataFechamento );
+            slc._slcDataFechamento = Convert.ToDateTime(dataFechamento);
             datatime = Session["datatime"].ToString();
             slc._slcData = Convert.ToDateTime(datatime);
 
@@ -412,11 +379,11 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                 else
                 {
                     usu._usuSenha = Funcoes.HashSHA512(senha);
-                   
+
 
                 }
 
-                
+
             }
             //atualizar usuario
             UsuarioBD.Update(usu);
@@ -432,16 +399,59 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                     Response.Redirect("ListaSolicitacao.aspx");
                 }
             }
+        }
+    }
 
-            
 
+
+
+
+    //ESSAS CLASSES NÂO ESTÂO SENDO USADAS
+    //-------------------------------------------------------------------------------------------
+
+    //Não esta sendo usado!
+    protected void btnPegarCheck_Click(object sender, EventArgs e)
+    {
+        foreach (ListItem item in checkBoxListSvc.Items)
+        {
+            if (item.Selected)
+            {
+                //lblChecks.Text += item.Value + " - " + item.Text;
+            }
+        }
+    }
+
+    //Não esta sendo usado!
+    protected void Checkservic_Clicked(object sender, EventArgs e)
+    {
+
+
+        //Como Atribuir esta classe
+        if (checkBoxListSvc.SelectedItem.Selected)
+        {
+            //Peegar ID do Serviço
+            int servico = Convert.ToInt32(checkBoxListSvc.SelectedValue);
+
+            //Pegar ID da Solicitação
+            int codigo = Convert.ToInt32(Request.QueryString["slc"].ToString());
+
+            servicoSelecionado[servico, codigo] = 1;
 
         }
 
 
-
-
-
-
     }
+
+    //Não esta sendo usado!
+    protected void ddnFormaDePagamento_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        // Guarde o valor do ID selecionado
+
+
+        // Faça algo com o valor
+    }
+
+    //-------------------------------------------------------------------------------------------
+
+
 }
