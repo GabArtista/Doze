@@ -10,6 +10,8 @@ public partial class ListarSolicitacaoUsuario : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Sucesso! Agora é só aguardar que nossa equipe vai entrar em contato! ');", true);
+
         //lblUrl.Text = Request.QueryString["email"].ToString();
         if ((Session["USUARIO"] != null))
         {
@@ -18,6 +20,7 @@ public partial class ListarSolicitacaoUsuario : System.Web.UI.Page
             if (!Page.IsPostBack)
             {
                 LoadGrid();
+                
             }
         }
         else

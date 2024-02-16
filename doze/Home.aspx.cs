@@ -30,12 +30,12 @@ public partial class Home : System.Web.UI.Page
     /// <param name="e"></param>
     protected void btnLead_Click(object sender, EventArgs e)
     {
-        
+
 
         //Validar se o e-mail ja esta cadastrado
         //Se sim, Perguntar se a conta pertence ao usuario (Como: Solicitando a senha) Jogar ele para a pagina dele. Notificar.
         Usuario usu = new Usuario();
-        
+
         usu._usuNome = txtNome.Text;
         usu._usuEmail = txtEmail.Text;
         usu._usuSenha = Funcoes.HashSHA512(txtSenha.Text);
@@ -96,18 +96,42 @@ public partial class Home : System.Web.UI.Page
             Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto: Descricao não pode ser vazio');", true);
         }
 
-        if(temerro == false)
+        if (temerro == false)
         {
-            UsuarioBD.Insert(usu);//Cria usuario
-            int idUsu;
-            idUsu = UsuarioBD.puxarIDUsuarioCadastrado();//Puchando o ID do Ultimo Usuario Cadastrado
-            SolicitacaoBD.Insert(slc, idUsu);// Cria Solicitação
 
-            Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Sucesso!');", true);
+
+            // DEVE VERIFICAR SE O USUARIO JA EXISTE OU NÃO ANTES DE CRIAR O USUARIO!!
+
+            Usuario usuario = UsuarioBD.AuthenticaCliente(usu._usuEmail, usu._usuSenha);
+            if (usuario != null) // Se o usuario já existir, atribuir a solicitação ao usuario existente.
+            {
+                Session["USUARIO"] = usuario;
+                usu._usuID = usuario._usuID; // Atribuindo o ID do Usuario no banco para o Objeto no Codigo! 
+            }
+            else if (usuario == null) // Se o usuario não existir, atribuir a solicitação ao usuario existente.
+            {
+                UsuarioBD.Insert(usu);//Cria usuario
+
+                int idUsu;
+
+                idUsu = UsuarioBD.puxarIDUsuarioCadastrado();//Puchando o ID do Ultimo Usuario Cadastrado
+                usu._usuID = idUsu;//Atribuindo o novo ID do Usuario no banco para o Objeto no Codigo! 
+                Session["USUARIO"] = usu;
+            }
+
+
+            //Criar solicitação
+            if (SolicitacaoBD.Insert(slc, usu._usuID) == 0)
+            {
+
+                Response.Redirect("ListarSolicitacaoUsuario.aspx");
+
+
+            }
+            else if (SolicitacaoBD.Insert(slc, usu._usuID) == -2)
+            {
+                Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Opa, algo deu errado! Tente novamente!');", true);
+            }
         }
-        
-            
     }
-
-
 }

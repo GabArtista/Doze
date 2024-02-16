@@ -112,10 +112,11 @@ public class SolicitacaoBD
     /// <returns></returns>
     public static DataSet ListarSolicitacoesDeUsuarios(int id)
     {
+        DataSet ds = new DataSet();
         try
         {
 
-            DataSet ds = new DataSet();
+            
             IDbConnection conn = ConexaoBD.Conexao(); ;
             string sql = "SELECT * FROM solicitacao WHERE IDUsu = ?id;";
             IDbCommand cmd = ConexaoBD.Comando(sql, conn);
@@ -125,14 +126,14 @@ public class SolicitacaoBD
             cmd.Dispose();
             conn.Close();
             conn.Dispose();
-            return ds;
+            
 
         }
         catch (Exception ex)
         {
             return null;
         }
-
+        return ds;
     }
 
 
