@@ -11,9 +11,9 @@ public partial class NegociacaoAdm : System.Web.UI.Page
 
     //Pegar ID, Status Conexão e Status Ativação do Usuario que esta para ser editado, Usar esta ID, Status Conexão e Status Ativação no Botão responsavel por Etidar o Usuario
     int ID = 0;
-    Boolean StatusAtivacao;
+    Boolean StatusAtivacao = true;//Deveria vir da classe filha! Mas não esta acontecendo------------------------ ATENÇÃO!!
     Boolean StatusConexao;
-    string TipoDeUsuario;
+    string TipoDeUsuario = "Cliente";//Deveria vir da classe filha! Mas não esta acontecendo--------------------- ATENÇÃO!!
     string datatime;
 
     //Criar um Array de acordo com a quantidade de serviços que foram listados
@@ -79,11 +79,11 @@ public partial class NegociacaoAdm : System.Web.UI.Page
 
 
                     Usuario usuario = new Usuario();
-                    usuario = solicitacao.usu;
+                    usuario = solicitacao.usu;//NESTE MOMENTO A CLASSE N DEVERIA RETORNAR ALGUNS VALORES DO OBJETO USUARIO AUTERADO! PORQUE ESTÁ ACONTECENDO ISSO
 
                     //Colocar ID, Status Conexão e Status Ativação na variavel global para tratar no metodo do botão editar
                     Session["USUARIOCODIGO"] = usuario._usuID;
-                    StatusAtivacao = usuario._usuStatusAtivacao;
+                    
                     StatusConexao = usuario._usuStatusConexao;
 
                     txtNome.Text = usuario._usuNome;
@@ -321,7 +321,7 @@ public partial class NegociacaoAdm : System.Web.UI.Page
             if (slc._slcDataFechamento == null)
             {
                 temerro = true;
-                Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Data Fechamento não pode ser vazio.');", true);
+                Page.ClientScript.RegisterStartupScript(GetType(), "name", "alert('Campo de Texto Data Fechamento não pode ser vazio.');", true);//Deveria poder! RETIRAR ISSO
             }
 
             if (slc._slcEstrategiaCobranca == "")
@@ -384,6 +384,9 @@ public partial class NegociacaoAdm : System.Web.UI.Page
                 }
 
 
+            }else if (String.IsNullOrEmpty(txtSenha.Text))
+            {
+                usu._usuSenha = Session["USUARIOSENHA"].ToString();
             }
             //atualizar usuario
             UsuarioBD.Update(usu);
